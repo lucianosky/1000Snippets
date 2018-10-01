@@ -18,16 +18,17 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         snippet = [
-            "snippet": 1,
+            "id": 1,
             "title": "UIButton change text",
             "links": [
                 "https://stackoverflow.com/questions/1033763/is-it-possible-to-update-uibutton-title-text-programmatically"
             ]
         ]
+        // testing code in snippet
         firstButton.setTitle("1000 Snippets", for: .normal)
 
         snippet = [
-            "snippet": 2,
+            "id": 2,
             "title": "UIButton change font name",
             "links": [
                 "https://stackoverflow.com/questions/25002017/how-to-change-font-of-uibutton-with-swift"
@@ -37,16 +38,17 @@ class ViewController: UIViewController {
         
         // TODO: snippet for color
         snippet = [
-            "snippet": 3,
+            "id": 3,
             "title": "UIButton change font color",
             "links": [
-                "https://stackoverflow.com/questions/2474289/how-can-i-change-uibutton-title-color"
+                "https://stackoverflow.com/questions/2474289/how-can-i-change-uibutton-title-color",
+                "https://stackoverflow.com/questions/2474289/how-can-i-change-uibutton-title-color2"
             ]
         ]
         firstButton.setTitleColor(.red, for: .normal)
 
         snippet = [
-            "snippet": 4,
+            "id": 4,
             "title": "UIButton change background color"
         ]
         firstButton.backgroundColor = .lightGray
