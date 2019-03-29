@@ -26,6 +26,7 @@ class ViewController: UIViewController {
         ]
         // testing code in snippet
         firstButton.setTitle("1000 Snippets", for: .normal)
+        firstButton.setTitle("Pressed", for: .highlighted)
 
         snippet = [
             "id": 2,
@@ -45,7 +46,8 @@ class ViewController: UIViewController {
                 "https://stackoverflow.com/questions/2474289/how-can-i-change-uibutton-title-color2"
             ]
         ]
-        firstButton.setTitleColor(.red, for: .normal)
+        firstButton.setTitleColor(.blue, for: .normal)
+        firstButton.setTitleColor(.red, for: .highlighted)
 
         snippet = [
             "id": 4,
@@ -53,6 +55,15 @@ class ViewController: UIViewController {
         ]
         firstButton.backgroundColor = .lightGray
 
+        snippet = [
+            "id": 5,
+            "title": "UIButton rounded corners",
+            "links": [
+                "https://stackoverflow.com/questions/38874517/how-to-make-a-simple-rounded-button-in-storyboard"
+            ]
+        ]
+        firstButton.layer.cornerRadius = 10
+        firstButton.clipsToBounds = true
         
     }
 
