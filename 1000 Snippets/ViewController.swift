@@ -10,13 +10,33 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var firstButton: UIButton!
+    let firstButton = UIButton()
     
     var snippet: [String: Any] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        createSubviews()
+        createConstraints()
+        createSnippets()
+    }
+    
+    func createSubviews() {
+        firstButton.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        view.addSubview(firstButton)
+    }
+    
+    func createConstraints() {
+        let dict: [String: Any] = [
+            "firstButton": firstButton,
+            ]
+        activateConstraints("V:|-100-[firstButton(50)]", views: dict)
+        activateConstraints("H:[firstButton(150)]", views: dict)
+        firstButton.equalConstraints([.centerX], to: view)
+    }
+    
+    func createSnippets() {
         snippet = [
             "id": 1,
             "title": "UIButton change text",
@@ -27,7 +47,7 @@ class ViewController: UIViewController {
         // testing code in snippet
         firstButton.setTitle("1000 Snippets", for: .normal)
         firstButton.setTitle("Pressed", for: .highlighted)
-
+        
         snippet = [
             "id": 2,
             "title": "UIButton change font name",
@@ -48,13 +68,13 @@ class ViewController: UIViewController {
         ]
         firstButton.setTitleColor(.blue, for: .normal)
         firstButton.setTitleColor(.red, for: .highlighted)
-
+        
         snippet = [
             "id": 4,
             "title": "UIButton change background color"
         ]
         firstButton.backgroundColor = .lightGray
-
+        
         snippet = [
             "id": 5,
             "title": "UIButton rounded corners",
@@ -64,7 +84,6 @@ class ViewController: UIViewController {
         ]
         firstButton.layer.cornerRadius = 10
         firstButton.clipsToBounds = true
-        
     }
 
 }
