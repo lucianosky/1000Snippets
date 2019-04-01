@@ -11,7 +11,8 @@ import UIKit
 class ViewController: UIViewController {
 
     let firstButton = UIButton()
-    
+    let secondButton = UIButton()
+
     var snippet: [String: Any] = [:]
     
     override func viewDidLoad() {
@@ -23,17 +24,21 @@ class ViewController: UIViewController {
     
     func createSubviews() {
         firstButton.translatesAutoresizingMaskIntoConstraints = false
+        secondButton.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        view.addSubview(firstButton)
+        view.addSubviews([firstButton, secondButton])
     }
     
     func createConstraints() {
         let dict: [String: Any] = [
-            "firstButton": firstButton,
+            "btn1": firstButton,
+            "btn2": secondButton,
             ]
-        activateConstraints("V:|-100-[firstButton(50)]", views: dict)
-        activateConstraints("H:[firstButton(150)]", views: dict)
+        activateConstraints("V:|-100-[btn1(50)]-20-[btn2(50)]", views: dict)
+        activateConstraints("H:[btn1(150)]", views: dict)
         firstButton.equalConstraints([.centerX], to: view)
+        secondButton.equalConstraints([.centerX], to: view)
+        secondButton.equalConstraints([.width], to: firstButton)
     }
     
     func createSnippets() {
@@ -73,7 +78,7 @@ class ViewController: UIViewController {
             "id": 4,
             "title": "UIButton change background color"
         ]
-        firstButton.backgroundColor = .lightGray
+        firstButton.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
         
         snippet = [
             "id": 5,
@@ -84,6 +89,26 @@ class ViewController: UIViewController {
         ]
         firstButton.layer.cornerRadius = 10
         firstButton.clipsToBounds = true
+        
+        secondButton.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
+        secondButton.setTitle("Disabled", for: .normal)
+        secondButton.setTitleColor(.gray, for: .disabled)
+        
+        snippet = [
+            "id": 6,
+            "title": "UIButton set state enabled",
+            "links": [
+                "https://stackoverflow.com/questions/405134/manually-setting-a-uibutton-state"
+            ]
+        ]
+        secondButton.isEnabled = false
+        
+        // TODO:
+        // button isSelected
+        // button - radio
+        // UIColor extension, named color
+        // UIButtonExtension, with corner radius, etc
+        
     }
 
 }
