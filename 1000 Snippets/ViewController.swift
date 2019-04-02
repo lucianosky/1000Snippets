@@ -10,7 +10,7 @@ import UIKit
 
 // TODO - snippet at top level
 extension UIButton {
-    convenience init(_ title: String = "") {
+    convenience init(_ title: String = "", tag: Int = 0) {
         self.init(type: .custom)
         setTitle(title, for: .normal)
         setTitleColor(.blue, for: .normal)
@@ -18,6 +18,7 @@ extension UIButton {
         // TODO color name
         backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
         translatesAutoresizingMaskIntoConstraints = false
+        self.tag = tag
     }
 }
 
@@ -26,9 +27,11 @@ class ViewController: UIViewController {
     let firstButton = UIButton()
     let secondButton = UIButton()
     
-    let aButton = UIButton("a")
-    let bButton = UIButton("b")
-    let cButton = UIButton("c")
+    let aButton = UIButton("a", tag: 1)
+    let bButton = UIButton("b", tag: 2)
+    let cButton = UIButton("c", tag: 3)
+    
+    let tagButton = UIButton("tag")
 
     var snippet: [String: Any] = [:]
     
@@ -45,7 +48,7 @@ class ViewController: UIViewController {
         firstButton.translatesAutoresizingMaskIntoConstraints = false
         secondButton.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        view.addSubviews([firstButton, secondButton, aButton, bButton, cButton])
+        view.addSubviews([firstButton, secondButton, aButton, bButton, cButton, tagButton])
     }
     
     func createConstraints() {
@@ -55,8 +58,9 @@ class ViewController: UIViewController {
             "aBtn": aButton,
             "bBtn": bButton,
             "cBtn": cButton,
+            "tag": tagButton,
             ]
-        activateConstraints("V:|-100-[btn1(50)]-20-[btn2(50)]-20-[aBtn]", views: dict)
+        activateConstraints("V:|-100-[btn1(50)]-20-[btn2(50)]-20-[aBtn]-20-[tag]", views: dict)
         activateConstraints("H:[btn1(150)]", views: dict)
         activateConstraints("H:|-20-[aBtn(50)]-20-[bBtn]-20-[cBtn]", views: dict)
         firstButton.equalConstraints([.centerX], to: view)
@@ -64,6 +68,7 @@ class ViewController: UIViewController {
         secondButton.equalConstraints([.width], to: firstButton)
         bButton.equalConstraints([.top, .width], to: aButton)
         cButton.equalConstraints([.top, .width], to: aButton)
+        tagButton.equalConstraints([.left], to: aButton)
     }
     
     func createSnippets() {
@@ -151,6 +156,8 @@ class ViewController: UIViewController {
         bButton.addTarget(self, action:#selector(self.buttonPressed), for: .touchUpInside)
         cButton.addTarget(self, action:#selector(self.buttonPressed), for: .touchUpInside)
 
+        tagButton.addTarget(self, action:#selector(self.viewWithTag), for: .touchUpInside)
+
         // TODO:
         // button - radio
         // UIColor extension, named color
@@ -166,6 +173,22 @@ class ViewController: UIViewController {
             currentButton = sender
         }
     }
+    
+    @objc func viewWithTag(sender: UIButton!) {
+        
+        snippet = [
+            "id": 9,
+            "title": "UIView viewWithTag get view by tag",
+            "links": [
+                "https://stackoverflow.com/questions/28473893/referencing-a-uibutton-by-tag-value"
+            ]
+        ]
+        if let button = self.view.viewWithTag(2) as? UIButton {
+            buttonPressed(sender: button)
+        }
+
+    }
+
     
 }
 
