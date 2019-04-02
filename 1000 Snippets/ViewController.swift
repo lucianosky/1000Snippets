@@ -8,6 +8,21 @@
 
 import UIKit
 
+
+// TODO: BUG - extra bracket on some snippets!
+
+// TODO:
+// button - radio
+// UIColor extension, named color
+// UIButtonExtension, with corner radius, etc
+// revisar link do snippet 8: "https://stackoverflow.com/questions/24102191/make-a-uibutton-programmatically-in-swift"
+
+// FREE ICONS:
+// <div>Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"                 title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"                 title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+// For apps:
+// Place the attribution on the credits/description page of the application.
+
+
 // TODO - snippet at top level
 extension UIButton {
     convenience init(_ title: String = "", tag: Int = 0) {
@@ -43,6 +58,8 @@ class ViewController: UIViewController {
     
     let lblTag = UILabel("Tag")
 
+    let imageButton = UIButton("")
+
     var snippet: [String: Any] = [:]
     
     var currentButton: UIButton!
@@ -57,8 +74,9 @@ class ViewController: UIViewController {
     func createSubviews() {
         firstButton.translatesAutoresizingMaskIntoConstraints = false
         secondButton.translatesAutoresizingMaskIntoConstraints = false
+        imageButton.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        view.addSubviews([firstButton, secondButton, aButton, bButton, cButton, tagButton, lblTag])
+        view.addSubviews([firstButton, secondButton, aButton, bButton, cButton, tagButton, lblTag, imageButton])
     }
     
     func createConstraints() {
@@ -69,9 +87,10 @@ class ViewController: UIViewController {
             "bBtn": bButton,
             "cBtn": cButton,
             "tag": tagButton,
-            "lbl": lblTag
+            "lbl": lblTag,
+            "imgBtn": imageButton
             ]
-        activateConstraints("V:|-100-[btn1(50)]-20-[btn2(50)]-20-[aBtn]-20-[tag]", views: dict)
+        activateConstraints("V:|-100-[btn1(50)]-20-[btn2(50)]-20-[aBtn]-20-[tag]-20-[imgBtn]", views: dict)
         activateConstraints("H:[btn1(150)]", views: dict)
         activateConstraints("H:|-20-[aBtn(50)]-20-[bBtn]-20-[cBtn]-20-[lbl]", views: dict)
         firstButton.equalConstraints([.centerX], to: view)
@@ -81,6 +100,7 @@ class ViewController: UIViewController {
         cButton.equalConstraints([.top, .width], to: aButton)
         tagButton.equalConstraints([.left, .width], to: aButton)
         lblTag.equalConstraints([.centerY], to: aButton)
+        imageButton.equalConstraints([.left, .width], to: aButton)
     }
     
     func createSnippets() {
@@ -104,7 +124,6 @@ class ViewController: UIViewController {
         ]
         firstButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17.0)
         
-        // TODO: snippet for color
         snippet = [
             "id": 3,
             "title": "UIButton change font color",
@@ -116,6 +135,8 @@ class ViewController: UIViewController {
         firstButton.setTitleColor(.blue, for: .normal)
         firstButton.setTitleColor(.red, for: .highlighted)
         
+        // TODO: snippets for color
+
         snippet = [
             "id": 4,
             "title": "UIButton change background color"
@@ -169,12 +190,15 @@ class ViewController: UIViewController {
         cButton.addTarget(self, action:#selector(self.buttonPressed), for: .touchUpInside)
 
         tagButton.addTarget(self, action:#selector(self.viewWithTag), for: .touchUpInside)
-
-        // TODO:
-        // button - radio
-        // UIColor extension, named color
-        // UIButtonExtension, with corner radius, etc
-        // revisar link do snippet 8: "https://stackoverflow.com/questions/24102191/make-a-uibutton-programmatically-in-swift"
+        
+        snippet = [
+            "id": 11,
+            "title": "UIButton set image for state",
+            "links": [
+                "https://stackoverflow.com/questions/26837371/how-to-change-uibutton-image-in-swift"
+            ]
+        ]
+        imageButton.setImage(UIImage(named: "1-2-3"), for: .normal)
 
     }
 
