@@ -22,6 +22,14 @@ extension UIButton {
     }
 }
 
+extension UILabel {
+    convenience init(_ text: String = "") {
+        self.init()
+        self.text = text
+        translatesAutoresizingMaskIntoConstraints = false
+    }
+}
+
 class ViewController: UIViewController {
 
     let firstButton = UIButton()
@@ -32,6 +40,8 @@ class ViewController: UIViewController {
     let cButton = UIButton("c", tag: 3)
     
     let tagButton = UIButton("tag")
+    
+    let lblTag = UILabel("Tag")
 
     var snippet: [String: Any] = [:]
     
@@ -48,7 +58,7 @@ class ViewController: UIViewController {
         firstButton.translatesAutoresizingMaskIntoConstraints = false
         secondButton.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        view.addSubviews([firstButton, secondButton, aButton, bButton, cButton, tagButton])
+        view.addSubviews([firstButton, secondButton, aButton, bButton, cButton, tagButton, lblTag])
     }
     
     func createConstraints() {
@@ -59,16 +69,18 @@ class ViewController: UIViewController {
             "bBtn": bButton,
             "cBtn": cButton,
             "tag": tagButton,
+            "lbl": lblTag
             ]
         activateConstraints("V:|-100-[btn1(50)]-20-[btn2(50)]-20-[aBtn]-20-[tag]", views: dict)
         activateConstraints("H:[btn1(150)]", views: dict)
-        activateConstraints("H:|-20-[aBtn(50)]-20-[bBtn]-20-[cBtn]", views: dict)
+        activateConstraints("H:|-20-[aBtn(50)]-20-[bBtn]-20-[cBtn]-20-[lbl]", views: dict)
         firstButton.equalConstraints([.centerX], to: view)
         secondButton.equalConstraints([.centerX], to: view)
         secondButton.equalConstraints([.width], to: firstButton)
         bButton.equalConstraints([.top, .width], to: aButton)
         cButton.equalConstraints([.top, .width], to: aButton)
-        tagButton.equalConstraints([.left], to: aButton)
+        tagButton.equalConstraints([.left, .width], to: aButton)
+        lblTag.equalConstraints([.centerY], to: aButton)
     }
     
     func createSnippets() {
@@ -172,6 +184,16 @@ class ViewController: UIViewController {
             sender.isSelected = true
             currentButton = sender
         }
+        
+        snippet = [
+            "id": 10,
+            "title": "UIView use view (sender) tag",
+            "links": [
+                "https://stackoverflow.com/questions/30046540/get-button-pressed-id-on-swift-via-sender"
+            ]
+        ]
+        lblTag.text = "Tag: \(sender.tag)"
+        
     }
     
     @objc func viewWithTag(sender: UIButton!) {
