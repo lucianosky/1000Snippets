@@ -90,14 +90,14 @@ class ViewController: UIViewController {
             "lbl": lblTag,
             "imgBtn": imageButton
             ]
-        activateConstraints("V:|-100-[btn1(50)]-20-[btn2(50)]-20-[aBtn]-20-[tag]-20-[imgBtn]", views: dict)
+        activateConstraints("V:|-100-[btn1(50)]-20-[btn2(50)]-20-[aBtn(50)]-20-[tag]-20-[imgBtn]", views: dict)
         activateConstraints("H:[btn1(150)]", views: dict)
-        activateConstraints("H:|-20-[aBtn(50)]-20-[bBtn]-20-[cBtn]-20-[lbl]", views: dict)
+        activateConstraints("H:|-20-[aBtn(80)]-20-[bBtn]-20-[cBtn]-20-[lbl]", views: dict)
         firstButton.equalConstraints([.centerX], to: view)
         secondButton.equalConstraints([.centerX], to: view)
         secondButton.equalConstraints([.width], to: firstButton)
-        bButton.equalConstraints([.top, .width], to: aButton)
-        cButton.equalConstraints([.top, .width], to: aButton)
+        bButton.equalConstraints([.top, .width, .height], to: aButton)
+        cButton.equalConstraints([.top, .width, .height], to: aButton)
         tagButton.equalConstraints([.left, .width], to: aButton)
         lblTag.equalConstraints([.centerY], to: aButton)
         imageButton.equalConstraints([.left, .width], to: aButton)
@@ -198,7 +198,18 @@ class ViewController: UIViewController {
                 "https://stackoverflow.com/questions/26837371/how-to-change-uibutton-image-in-swift"
             ]
         ]
-        imageButton.setImage(UIImage(named: "1-2-3"), for: .normal)
+        aButton.setImage(UIImage(named: "1-2-3"), for: .normal)
+        
+        bButton.setImage(UIImage(named: "1-2-3"), for: .normal)
+        
+        snippet = [
+            "id": 12,
+            "title": "UIButton padding right to image and before text",
+            "links": [
+                "https://stackoverflow.com/questions/5363789/giving-a-text-margin-padding-to-the-uibutton-on-the-iphone"
+            ]
+        ]
+        bButton.imageEdgeInsets.right = 10
 
     }
 
