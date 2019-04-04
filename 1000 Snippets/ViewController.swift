@@ -45,6 +45,17 @@ extension UILabel {
     }
 }
 
+// WIP SNIPPET 13
+class ButtonWithImage: UIButton {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if imageView != nil {
+            imageEdgeInsets = UIEdgeInsets(top: 5, left: (bounds.width - 35), bottom: 5, right: 5)
+            titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: (imageView?.frame.width)!)
+        }
+    }
+}
+
 class ViewController: UIViewController {
 
     let firstButton = UIButton()
@@ -58,7 +69,7 @@ class ViewController: UIViewController {
     
     let lblTag = UILabel("Tag")
 
-    let imageButton = UIButton("")
+    let imageButton = ButtonWithImage()
 
     var snippet: [String: Any] = [:]
     
@@ -90,9 +101,10 @@ class ViewController: UIViewController {
             "lbl": lblTag,
             "imgBtn": imageButton
             ]
-        activateConstraints("V:|-100-[btn1(50)]-20-[btn2(50)]-20-[aBtn(50)]-20-[tag]-20-[imgBtn]", views: dict)
+        activateConstraints("V:|-100-[btn1(50)]-20-[btn2(50)]-20-[aBtn(50)]-20-[tag]-20-[imgBtn(40)]", views: dict)
         activateConstraints("H:[btn1(150)]", views: dict)
         activateConstraints("H:|-20-[aBtn(80)]-20-[bBtn]-20-[cBtn]-20-[lbl]", views: dict)
+        activateConstraints("H:|-[imgBtn]-|", views: dict)
         firstButton.equalConstraints([.centerX], to: view)
         secondButton.equalConstraints([.centerX], to: view)
         secondButton.equalConstraints([.width], to: firstButton)
@@ -100,7 +112,7 @@ class ViewController: UIViewController {
         cButton.equalConstraints([.top, .width, .height], to: aButton)
         tagButton.equalConstraints([.left, .width], to: aButton)
         lblTag.equalConstraints([.centerY], to: aButton)
-        imageButton.equalConstraints([.left, .width], to: aButton)
+        imageButton.equalConstraints([.left], to: aButton)
     }
     
     func createSnippets() {
@@ -210,7 +222,28 @@ class ViewController: UIViewController {
             ]
         ]
         bButton.imageEdgeInsets.right = 10
+        
+        // WIP SNIPPET 13
+        imageButton.setImage(UIImage(named: "1-2-3"), for: .normal)
+        imageButton.setTitle("image", for: .normal)
+        imageButton.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
+        imageButton.setTitleColor(.blue, for: .normal)
 
+    }
+
+    @objc func viewWithTag(sender: UIButton!) {
+        
+        snippet = [
+            "id": 9,
+            "title": "UIView viewWithTag get view by tag",
+            "links": [
+                "https://stackoverflow.com/questions/28473893/referencing-a-uibutton-by-tag-value"
+            ]
+        ]
+        if let button = self.view.viewWithTag(2) as? UIButton {
+            buttonPressed(sender: button)
+        }
+        
     }
 
     @objc func buttonPressed(sender: UIButton!) {
@@ -230,21 +263,7 @@ class ViewController: UIViewController {
         lblTag.text = "Tag: \(sender.tag)"
         
     }
-    
-    @objc func viewWithTag(sender: UIButton!) {
-        
-        snippet = [
-            "id": 9,
-            "title": "UIView viewWithTag get view by tag",
-            "links": [
-                "https://stackoverflow.com/questions/28473893/referencing-a-uibutton-by-tag-value"
-            ]
-        ]
-        if let button = self.view.viewWithTag(2) as? UIButton {
-            buttonPressed(sender: button)
-        }
 
-    }
 
     
 }
