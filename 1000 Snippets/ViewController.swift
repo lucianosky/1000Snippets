@@ -71,9 +71,6 @@ class ViewController: UIViewController {
 
     let imageButton = ButtonWithImage()
 
-    var snippet: [String: Any] = [:]
-    var newSnippet: Snippet!
-    
     var currentButton: UIButton!
     
     override func viewDidLoad() {
