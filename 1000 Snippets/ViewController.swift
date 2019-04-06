@@ -72,6 +72,7 @@ class ViewController: UIViewController {
     let imageButton = ButtonWithImage()
 
     var snippet: [String: Any] = [:]
+    var newSnippet: Snippet!
     
     var currentButton: UIButton!
     
@@ -116,52 +117,33 @@ class ViewController: UIViewController {
     }
     
     func createSnippets() {
-        snippet = [
-            "id": 1,
-            "title": "UIButton change text",
-            "links": [
-                "https://stackoverflow.com/questions/1033763/is-it-possible-to-update-uibutton-title-text-programmatically"
-            ]
-        ]
-        // testing code in snippet
+        
+        _ = Snippet( 1, "UIButton change text", [
+            "https://stackoverflow.com/questions/1033763/is-it-possible-to-update-uibutton-title-text-programmatically"
+        ])
         firstButton.setTitle("1000 Snippets", for: .normal)
         firstButton.setTitle("Pressed", for: .highlighted)
         
-        snippet = [
-            "id": 2,
-            "title": "UIButton change font name",
-            "links": [
-                "https://stackoverflow.com/questions/25002017/how-to-change-font-of-uibutton-with-swift"
-            ]
-        ]
+        _ = Snippet( 2, "UIButton change font name", [
+            "https://stackoverflow.com/questions/25002017/how-to-change-font-of-uibutton-with-swift"
+        ])
         firstButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17.0)
         
-        snippet = [
-            "id": 3,
-            "title": "UIButton change font color",
-            "links": [
-                "https://stackoverflow.com/questions/2474289/how-can-i-change-uibutton-title-color",
-                "https://stackoverflow.com/questions/2474289/how-can-i-change-uibutton-title-color2"
-            ]
-        ]
+        _ = Snippet( 3, "UIButton change font color", [
+            "https://stackoverflow.com/questions/2474289/how-can-i-change-uibutton-title-color"
+        ])
         firstButton.setTitleColor(.blue, for: .normal)
         firstButton.setTitleColor(.red, for: .highlighted)
         
         // TODO: snippets for color
 
-        snippet = [
-            "id": 4,
-            "title": "UIButton change background color"
-        ]
+        _ = Snippet( 4, "UIButton change background color", [
+        ])
         firstButton.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
         
-        snippet = [
-            "id": 5,
-            "title": "UIButton rounded corners",
-            "links": [
-                "https://stackoverflow.com/questions/38874517/how-to-make-a-simple-rounded-button-in-storyboard"
-            ]
-        ]
+        _ = Snippet( 5, "UIButton rounded corners", [
+            "https://stackoverflow.com/questions/38874517/how-to-make-a-simple-rounded-button-in-storyboard"
+        ])
         firstButton.layer.cornerRadius = 10
         firstButton.clipsToBounds = true
         
@@ -169,33 +151,21 @@ class ViewController: UIViewController {
         secondButton.setTitle("Disabled", for: .normal)
         secondButton.setTitleColor(.gray, for: .disabled)
         
-        snippet = [
-            "id": 6,
-            "title": "UIButton set state enabled",
-            "links": [
-                "https://stackoverflow.com/questions/405134/manually-setting-a-uibutton-state"
-            ]
-        ]
+        _ = Snippet( 6, "UIButton set state enabled", [
+            "https://stackoverflow.com/questions/405134/manually-setting-a-uibutton-state"
+        ])
         secondButton.isEnabled = false
 
-        snippet = [
-            "id": 7,
-            "title": "UIButton set state selected",
-            "links": [
-                "https://stackoverflow.com/questions/25944791/how-to-change-the-state-of-an-uibutton-in-ios-using-swift"
-            ]
-        ]
+        _ = Snippet( 7, "UIButton set state selected", [
+            "https://stackoverflow.com/questions/25944791/how-to-change-the-state-of-an-uibutton-in-ios-using-swift"
+        ])
         aButton.isSelected = true
         
         currentButton = aButton
         
-        snippet = [
-            "id": 8,
-            "title": "UIButton add target action for touchUpInside",
-            "links": [
-                "https://stackoverflow.com/questions/24102191/make-a-uibutton-programmatically-in-swift"
-            ]
-        ]
+        _ = Snippet( 8, "UIButton add target action for touchUpInside", [
+            "https://stackoverflow.com/questions/24102191/make-a-uibutton-programmatically-in-swift"
+        ])
         aButton.addTarget(self, action:#selector(self.buttonPressed), for: .touchUpInside)
 
         bButton.addTarget(self, action:#selector(self.buttonPressed), for: .touchUpInside)
@@ -203,24 +173,16 @@ class ViewController: UIViewController {
 
         tagButton.addTarget(self, action:#selector(self.viewWithTag), for: .touchUpInside)
         
-        snippet = [
-            "id": 11,
-            "title": "UIButton set image for state",
-            "links": [
-                "https://stackoverflow.com/questions/26837371/how-to-change-uibutton-image-in-swift"
-            ]
-        ]
+        _ = Snippet( 11, "UIButton set image for state", [
+            "https://stackoverflow.com/questions/26837371/how-to-change-uibutton-image-in-swift"
+        ])
         aButton.setImage(UIImage(named: "1-2-3"), for: .normal)
         
         bButton.setImage(UIImage(named: "1-2-3"), for: .normal)
         
-        snippet = [
-            "id": 12,
-            "title": "UIButton padding right to image and before text",
-            "links": [
-                "https://stackoverflow.com/questions/5363789/giving-a-text-margin-padding-to-the-uibutton-on-the-iphone"
-            ]
-        ]
+        _ = Snippet( 12, "UIButton padding right to image and before text", [
+            "https://stackoverflow.com/questions/5363789/giving-a-text-margin-padding-to-the-uibutton-on-the-iphone"
+        ])
         bButton.imageEdgeInsets.right = 10
         
         // WIP SNIPPET 13
@@ -233,13 +195,9 @@ class ViewController: UIViewController {
 
     @objc func viewWithTag(sender: UIButton!) {
         
-        snippet = [
-            "id": 9,
-            "title": "UIView viewWithTag get view by tag",
-            "links": [
-                "https://stackoverflow.com/questions/28473893/referencing-a-uibutton-by-tag-value"
-            ]
-        ]
+        _ = Snippet( 9, "UIView viewWithTag get view by tag", [
+            "https://stackoverflow.com/questions/28473893/referencing-a-uibutton-by-tag-value"
+        ])
         if let button = self.view.viewWithTag(2) as? UIButton {
             buttonPressed(sender: button)
         }
@@ -253,18 +211,12 @@ class ViewController: UIViewController {
             currentButton = sender
         }
         
-        snippet = [
-            "id": 10,
-            "title": "UIView use view (sender) tag",
-            "links": [
-                "https://stackoverflow.com/questions/30046540/get-button-pressed-id-on-swift-via-sender"
-            ]
-        ]
+        _ = Snippet( 10, "UIView use view (sender) tag", [
+            "https://stackoverflow.com/questions/30046540/get-button-pressed-id-on-swift-via-sender"
+        ])
         lblTag.text = "Tag: \(sender.tag)"
         
     }
-
-
     
 }
 
