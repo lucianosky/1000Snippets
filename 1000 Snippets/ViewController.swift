@@ -124,16 +124,15 @@ class ViewController: UIViewController {
     let aButton = UIButton("a", tag: 1)
     let bButton = UIButton("b", tag: 2)
     let cButton = UIButton("c", tag: 3)
-    
+
     let tagButton = UIButton("tag")
-    
+    let sizeButton = UIButton("Very large title text")
+    let twoLinesButton = UIButton("Foobar")
+
     let lblTag = UILabel("Tag")
 
     let horizButton = HorizButton()
     let vertButton = VertButton()
-    
-    let sizeButton = UIButton("Very large title text")
-    let twoLinesButton = UIButton("Foobar")
     let closureButton = ClosureButton("10", tag: 10)
 
     var currentButton: UIButton!
