@@ -53,7 +53,8 @@ extension UIButton {
 /*
 _ = Snippet( 13, "UIButton image and text aligned horizontally full line extension", [
     "https://stackoverflow.com/questions/33033737/add-rightview-in-uibutton",
-    "https://medium.com/@harmittaa/uibutton-with-label-text-and-right-aligned-image-a9d0f590bba1"
+    "https://medium.com/@harmittaa/uibutton-with-label-text-and-right-aligned-image-a9d0f590bba1",
+    "https://stackoverflow.com/questions/17800288/autolayout-intrinsic-size-of-uibutton-does-not-include-title-insets"
 ])
 */
 class ButtonWithImage: UIButton {
@@ -68,7 +69,8 @@ class ButtonWithImage: UIButton {
 
 /*
 _ = Snippet( 14, "UIButton image and text aligned vertically extension", [
-     "https://stackoverflow.com/questions/4201959/label-under-image-in-uibutton",
+    "https://stackoverflow.com/questions/4201959/label-under-image-in-uibutton",
+    "https://stackoverflow.com/questions/34682737/button-with-image-and-text-vertically-aligned-using-autolayout-constraints"
 ])
 */
 class ButtonWithImage2: UIButton {
@@ -112,6 +114,8 @@ class ViewController: UIViewController {
 
     let imageButton = ButtonWithImage()
     let imageButton2 = ButtonWithImage2()
+    
+    let sizeButton = UIButton("Very large title text")
 
     var currentButton: UIButton!
     
@@ -128,7 +132,7 @@ class ViewController: UIViewController {
         imageButton.translatesAutoresizingMaskIntoConstraints = false
         imageButton2.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        view.addSubviews([firstButton, secondButton, aButton, bButton, cButton, tagButton, lblTag, imageButton, imageButton2])
+        view.addSubviews([firstButton, secondButton, aButton, bButton, cButton, tagButton, lblTag, imageButton, imageButton2, sizeButton])
     }
     
     func createConstraints() {
@@ -141,12 +145,14 @@ class ViewController: UIViewController {
             "tag": tagButton,
             "lbl": lblTag,
             "imgBtn": imageButton,
-            "imgBtn2": imageButton2
+            "imgBtn2": imageButton2,
+            "sizeBtn": sizeButton
             ]
         activateConstraints("V:|-100-[btn1(50)]-20-[btn2(50)]-20-[aBtn(50)]-20-[tag]-20-[imgBtn(40)]-20-[imgBtn2(80)]", views: dict)
         activateConstraints("H:[btn1(150)]", views: dict)
         activateConstraints("H:|-20-[aBtn(80)]-20-[bBtn]-20-[cBtn]-20-[lbl]", views: dict)
         activateConstraints("H:|-[imgBtn]-|", views: dict)
+        activateConstraints("H:|-[imgBtn2]-20-[sizeBtn]", views: dict)
         firstButton.equalConstraints([.centerX], to: view)
         secondButton.equalConstraints([.centerX], to: view)
         secondButton.equalConstraints([.width], to: firstButton)
@@ -156,6 +162,7 @@ class ViewController: UIViewController {
         lblTag.equalConstraints([.centerY], to: aButton)
         imageButton.equalConstraints([.left], to: aButton)
         imageButton2.equalConstraints([.left, .width], to: aButton)
+        sizeButton.equalConstraints([.top], to: imageButton2)
     }
     
     func createSnippets() {
@@ -227,17 +234,25 @@ class ViewController: UIViewController {
         ])
         bButton.imageEdgeInsets.right = 10
         
+        // TODO - review - use init
         // for snippet 13
         imageButton.setImage(UIImage(named: "1-2-3"), for: .normal)
         imageButton.setTitle("image", for: .normal)
         imageButton.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
         imageButton.setTitleColor(.blue, for: .normal)
 
+        // TODO - review - use init
         // for snipppet 14
         imageButton2.setImage(UIImage(named: "1-2-3"), for: .normal)
         imageButton2.setTitle("image2", for: .normal)
         imageButton2.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
         imageButton2.setTitleColor(.blue, for: .normal)
+        
+        _ = Snippet( 16, "UIButton size to fit", [
+            "https://stackoverflow.com/questions/4135032/ios-uibutton-resize-according-to-text-length",
+            "https://stackoverflow.com/questions/39283525/easiest-way-to-adjust-uibutton-size-based-on-text"
+        ])
+        sizeButton.sizeToFit()
         
     }
 
