@@ -102,7 +102,9 @@ class VertButton: UIButton {
 /*
 _ = Snippet( 20, "UIButton responding to touch with closure (class)", [
     "https://stackoverflow.com/questions/37903243/swift-programmatically-create-function-for-button-with-a-closure"
-    "https://stackoverflow.com/questions/25919472/adding-a-closure-as-target-to-a-uibutton"
+    "https://stackoverflow.com/questions/25919472/adding-a-closure-as-target-to-a-uibutton",
+    "https://medium.com/@jackywangdeveloper/swift-the-right-way-to-add-target-in-uibutton-in-using-closures-877557ed9455",
+    "https://stackoverflow.com/questions/35550966/swift-add-show-action-to-button-programmatically"
 ])
 */
 class ClosureButton: UIButton {
