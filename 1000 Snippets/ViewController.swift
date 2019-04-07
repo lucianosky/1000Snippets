@@ -99,6 +99,23 @@ class VertButton: UIButton {
     }
 }
 
+/*
+_ = Snippet( 20, "UIButton responding to touch with closure (class)", [
+    "https://stackoverflow.com/questions/37903243/swift-programmatically-create-function-for-button-with-a-closure"
+    "https://stackoverflow.com/questions/25919472/adding-a-closure-as-target-to-a-uibutton"
+])
+*/
+class ClosureButton: UIButton {
+    var closure: (() -> Void)?
+    func onTouched(closure: @escaping () -> Void) {
+        self.closure = closure
+        self.addTarget(self, action: #selector(ClosureButton.buttonTouched), for: .touchUpInside)
+    }
+    @objc func buttonTouched() {
+        closure?()
+    }
+}
+
 class ViewController: UIViewController {
 
     let firstButton = UIButton()
@@ -117,6 +134,7 @@ class ViewController: UIViewController {
     
     let sizeButton = UIButton("Very large title text")
     let twoLinesButton = UIButton("Foobar")
+    let closureButton = ClosureButton("10", tag: 10)
 
     var currentButton: UIButton!
     
@@ -133,7 +151,8 @@ class ViewController: UIViewController {
         horizButton.translatesAutoresizingMaskIntoConstraints = false
         vertButton.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        view.addSubviews([firstButton, secondButton, aButton, bButton, cButton, tagButton, lblTag, horizButton, vertButton, sizeButton, twoLinesButton])
+        view.addSubviews([firstButton, secondButton, aButton, bButton, cButton, tagButton, lblTag,
+                          horizButton, vertButton, sizeButton, twoLinesButton, closureButton])
     }
     
     func createConstraints() {
@@ -148,9 +167,10 @@ class ViewController: UIViewController {
             "imgBtn": horizButton,
             "imgBtn2": vertButton,
             "sizeBtn": sizeButton,
-            "twoLBtn": twoLinesButton
+            "twoLBtn": twoLinesButton,
+            "cloBtn": closureButton
             ]
-        activateConstraints("V:|-100-[btn1(50)]-20-[btn2(50)]-20-[aBtn(50)]-20-[tag]-20-[imgBtn(40)]-20-[imgBtn2(80)]", views: dict)
+        activateConstraints("V:|-100-[btn1(50)]-20-[btn2(50)]-20-[aBtn(50)]-20-[tag]-20-[imgBtn(40)]-20-[imgBtn2(80)]-[cloBtn]", views: dict)
         activateConstraints("V:[twoLBtn(80)]", views: dict)
         activateConstraints("H:[btn1(150)]", views: dict)
         activateConstraints("H:|-20-[aBtn(80)]-20-[bBtn]-20-[cBtn]-20-[lbl]", views: dict)
@@ -167,6 +187,7 @@ class ViewController: UIViewController {
         vertButton.equalConstraints([.left, .width], to: aButton)
         sizeButton.equalConstraints([.top], to: vertButton)
         twoLinesButton.equalConstraints([.top], to: vertButton)
+        closureButton.equalConstraints([.left, .width], to: aButton)
     }
     
     func createSnippets() {
@@ -279,6 +300,14 @@ class ViewController: UIViewController {
         ])
         twoLinesButton.setTitle("foo\nbar", for: .normal)
         twoLinesButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
+        
+        _ = Snippet( 21, "UIButton responding to touch with closure (closure)", [
+        ])
+        closureButton.onTouched { [weak self] in
+            guard let self = self else { return }
+            self.closureButton.tag = self.closureButton.tag + 1
+            self.closureButton.setTitle(String(self.closureButton.tag), for: .normal)
+        }
         
     }
 
