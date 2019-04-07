@@ -22,21 +22,7 @@ import UIKit
 // For apps:
 // Place the attribution on the credits/description page of the application.
 
-
-// TODO - snippet at top level
-extension UIButton {
-    convenience init(_ title: String = "", tag: Int = 0) {
-        self.init(type: .custom)
-        setTitle(title, for: .normal)
-        setTitleColor(.blue, for: .normal)
-        setTitleColor(.red, for: .selected)
-        // TODO color name
-        backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
-        translatesAutoresizingMaskIntoConstraints = false
-        self.tag = tag
-    }
-}
-
+// TODO - change to new class when doing UILabel snippets
 extension UILabel {
     convenience init(_ text: String = "") {
         self.init()
@@ -45,7 +31,31 @@ extension UILabel {
     }
 }
 
-// WIP SNIPPET 13
+// TODO color name - name, extension
+/*
+ _ = Snippet( 15, "UIButton convenience init", [
+])
+*/
+extension UIButton {
+    convenience init(_ title: String = "", tag: Int = 0) {
+        self.init(type: .custom)
+        setTitle(title, for: .normal)
+        setTitleColor(.blue, for: .normal)
+        setTitleColor(.red, for: .selected)
+        backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
+        translatesAutoresizingMaskIntoConstraints = false
+        self.tag = tag
+    }
+}
+
+// TODO: review snippets 13 and 14
+
+/*
+_ = Snippet( 13, "UIButton image and text aligned horizontally full line extension", [
+    "https://stackoverflow.com/questions/33033737/add-rightview-in-uibutton",
+    "https://medium.com/@harmittaa/uibutton-with-label-text-and-right-aligned-image-a9d0f590bba1"
+])
+*/
 class ButtonWithImage: UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -53,6 +63,37 @@ class ButtonWithImage: UIButton {
             imageEdgeInsets = UIEdgeInsets(top: 5, left: (bounds.width - 35), bottom: 5, right: 5)
             titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: (imageView?.frame.width)!)
         }
+    }
+}
+
+/*
+_ = Snippet( 14, "UIButton image and text aligned vertically extension", [
+     "https://stackoverflow.com/questions/4201959/label-under-image-in-uibutton",
+])
+*/
+class ButtonWithImage2: UIButton {
+    var padding: CGFloat = 5.0 {
+        didSet {
+            setNeedsLayout()
+        }
+    }
+    override var intrinsicContentSize: CGSize {
+        let maxSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+        if let titleSize = titleLabel?.sizeThatFits(maxSize), let imageSize = imageView?.sizeThatFits(maxSize) {
+            let width = ceil(max(imageSize.width, titleSize.width))
+            let height = ceil(imageSize.height + titleSize.height + padding)
+            return CGSize(width: width, height: height)
+        }
+        return super.intrinsicContentSize
+    }
+    override func layoutSubviews() {
+        if let image = imageView?.image, let title = titleLabel?.attributedText {
+            let imageSize = image.size
+            let titleSize = title.size()
+            titleEdgeInsets = UIEdgeInsetsMake(0.0, -imageSize.width, -(imageSize.height + padding), 0.0)
+            imageEdgeInsets = UIEdgeInsetsMake(-(titleSize.height + padding), 0.0, 0.0, -titleSize.width)
+        }
+        super.layoutSubviews()
     }
 }
 
@@ -70,6 +111,7 @@ class ViewController: UIViewController {
     let lblTag = UILabel("Tag")
 
     let imageButton = ButtonWithImage()
+    let imageButton2 = ButtonWithImage2()
 
     var currentButton: UIButton!
     
@@ -84,8 +126,9 @@ class ViewController: UIViewController {
         firstButton.translatesAutoresizingMaskIntoConstraints = false
         secondButton.translatesAutoresizingMaskIntoConstraints = false
         imageButton.translatesAutoresizingMaskIntoConstraints = false
+        imageButton2.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        view.addSubviews([firstButton, secondButton, aButton, bButton, cButton, tagButton, lblTag, imageButton])
+        view.addSubviews([firstButton, secondButton, aButton, bButton, cButton, tagButton, lblTag, imageButton, imageButton2])
     }
     
     func createConstraints() {
@@ -97,9 +140,10 @@ class ViewController: UIViewController {
             "cBtn": cButton,
             "tag": tagButton,
             "lbl": lblTag,
-            "imgBtn": imageButton
+            "imgBtn": imageButton,
+            "imgBtn2": imageButton2
             ]
-        activateConstraints("V:|-100-[btn1(50)]-20-[btn2(50)]-20-[aBtn(50)]-20-[tag]-20-[imgBtn(40)]", views: dict)
+        activateConstraints("V:|-100-[btn1(50)]-20-[btn2(50)]-20-[aBtn(50)]-20-[tag]-20-[imgBtn(40)]-20-[imgBtn2(80)]", views: dict)
         activateConstraints("H:[btn1(150)]", views: dict)
         activateConstraints("H:|-20-[aBtn(80)]-20-[bBtn]-20-[cBtn]-20-[lbl]", views: dict)
         activateConstraints("H:|-[imgBtn]-|", views: dict)
@@ -111,6 +155,7 @@ class ViewController: UIViewController {
         tagButton.equalConstraints([.left, .width], to: aButton)
         lblTag.equalConstraints([.centerY], to: aButton)
         imageButton.equalConstraints([.left], to: aButton)
+        imageButton2.equalConstraints([.left, .width], to: aButton)
     }
     
     func createSnippets() {
@@ -182,12 +227,18 @@ class ViewController: UIViewController {
         ])
         bButton.imageEdgeInsets.right = 10
         
-        // WIP SNIPPET 13
+        // for snippet 13
         imageButton.setImage(UIImage(named: "1-2-3"), for: .normal)
         imageButton.setTitle("image", for: .normal)
         imageButton.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
         imageButton.setTitleColor(.blue, for: .normal)
 
+        // for snipppet 14
+        imageButton2.setImage(UIImage(named: "1-2-3"), for: .normal)
+        imageButton2.setTitle("image2", for: .normal)
+        imageButton2.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
+        imageButton2.setTitleColor(.blue, for: .normal)
+        
     }
 
     @objc func viewWithTag(sender: UIButton!) {
