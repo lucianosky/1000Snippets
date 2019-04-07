@@ -254,6 +254,9 @@ class ViewController: UIViewController {
         ])
         sizeButton.sizeToFit()
         
+        // for snippet 17
+        sizeButton.addTarget(self, action:#selector(self.sizeButtonPressed), for: .touchUpInside)
+        
     }
 
     @objc func viewWithTag(sender: UIButton!) {
@@ -278,6 +281,16 @@ class ViewController: UIViewController {
             "https://stackoverflow.com/questions/30046540/get-button-pressed-id-on-swift-via-sender"
         ])
         lblTag.text = "Tag: \(sender.tag)"
+        
+    }
+    
+    @objc func sizeButtonPressed(sender: UIButton!) {
+        
+        _ = Snippet( 17, "UIButton image with tint color", [
+            "https://stackoverflow.com/questions/19829356/color-tint-uibutton-image"
+        ])
+        imageButton2.setImage(UIImage(named: "1-2-3")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate), for: .normal)
+        imageButton2.tintColor = .red
         
     }
     
