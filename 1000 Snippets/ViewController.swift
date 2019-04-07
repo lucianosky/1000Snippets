@@ -340,7 +340,8 @@ class ViewController: UIViewController {
     @objc func sizeButtonPressed(sender: UIButton!) {
         
         _ = Snippet( 17, "UIButton image with tint color", [
-            "https://stackoverflow.com/questions/19829356/color-tint-uibutton-image"
+            "https://stackoverflow.com/questions/19829356/color-tint-uibutton-image",
+            "https://stackoverflow.com/questions/27163171/change-color-of-png-in-buttons-ios"
         ])
         vertButton.setImage(UIImage(named: "1-2-3")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate), for: .normal)
         vertButton.tintColor = .red
