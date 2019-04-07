@@ -116,6 +116,7 @@ class ViewController: UIViewController {
     let vertButton = VertButton()
     
     let sizeButton = UIButton("Very large title text")
+    let twoLinesButton = UIButton("Foobar")
 
     var currentButton: UIButton!
     
@@ -132,7 +133,7 @@ class ViewController: UIViewController {
         horizButton.translatesAutoresizingMaskIntoConstraints = false
         vertButton.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        view.addSubviews([firstButton, secondButton, aButton, bButton, cButton, tagButton, lblTag, horizButton, vertButton, sizeButton])
+        view.addSubviews([firstButton, secondButton, aButton, bButton, cButton, tagButton, lblTag, horizButton, vertButton, sizeButton, twoLinesButton])
     }
     
     func createConstraints() {
@@ -146,13 +147,15 @@ class ViewController: UIViewController {
             "lbl": lblTag,
             "imgBtn": horizButton,
             "imgBtn2": vertButton,
-            "sizeBtn": sizeButton
+            "sizeBtn": sizeButton,
+            "twoLBtn": twoLinesButton
             ]
         activateConstraints("V:|-100-[btn1(50)]-20-[btn2(50)]-20-[aBtn(50)]-20-[tag]-20-[imgBtn(40)]-20-[imgBtn2(80)]", views: dict)
+        activateConstraints("V:[twoLBtn(80)]", views: dict)
         activateConstraints("H:[btn1(150)]", views: dict)
         activateConstraints("H:|-20-[aBtn(80)]-20-[bBtn]-20-[cBtn]-20-[lbl]", views: dict)
         activateConstraints("H:|-[imgBtn]-|", views: dict)
-        activateConstraints("H:|-[imgBtn2]-20-[sizeBtn]", views: dict)
+        activateConstraints("H:|-[imgBtn2]-20-[sizeBtn]-[twoLBtn(50)]", views: dict)
         firstButton.equalConstraints([.centerX], to: view)
         secondButton.equalConstraints([.centerX], to: view)
         secondButton.equalConstraints([.width], to: firstButton)
@@ -163,6 +166,7 @@ class ViewController: UIViewController {
         horizButton.equalConstraints([.left], to: aButton)
         vertButton.equalConstraints([.left, .width], to: aButton)
         sizeButton.equalConstraints([.top], to: vertButton)
+        twoLinesButton.equalConstraints([.top], to: vertButton)
     }
     
     func createSnippets() {
@@ -269,7 +273,12 @@ class ViewController: UIViewController {
         ]
         let title = NSAttributedString(string: "foobar", attributes: attributes)
         horizButton.setAttributedTitle(title, for: .normal)
-
+        
+        _ = Snippet( 19, "UIButton multi line title", [
+            "https://stackoverflow.com/questions/30679370/swift-uibutton-with-two-lines-of-text"
+        ])
+        twoLinesButton.setTitle("foo\nbar", for: .normal)
+        twoLinesButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
         
     }
 
