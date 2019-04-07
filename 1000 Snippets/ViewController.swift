@@ -57,7 +57,7 @@ _ = Snippet( 13, "UIButton image and text aligned horizontally full line extensi
     "https://stackoverflow.com/questions/17800288/autolayout-intrinsic-size-of-uibutton-does-not-include-title-insets"
 ])
 */
-class ButtonWithImage: UIButton {
+class HorizButton: UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
         if imageView != nil {
@@ -73,7 +73,7 @@ _ = Snippet( 14, "UIButton image and text aligned vertically extension", [
     "https://stackoverflow.com/questions/34682737/button-with-image-and-text-vertically-aligned-using-autolayout-constraints"
 ])
 */
-class ButtonWithImage2: UIButton {
+class VertButton: UIButton {
     var padding: CGFloat = 5.0 {
         didSet {
             setNeedsLayout()
@@ -112,8 +112,8 @@ class ViewController: UIViewController {
     
     let lblTag = UILabel("Tag")
 
-    let imageButton = ButtonWithImage()
-    let imageButton2 = ButtonWithImage2()
+    let horizButton = HorizButton()
+    let vertButton = VertButton()
     
     let sizeButton = UIButton("Very large title text")
 
@@ -129,10 +129,10 @@ class ViewController: UIViewController {
     func createSubviews() {
         firstButton.translatesAutoresizingMaskIntoConstraints = false
         secondButton.translatesAutoresizingMaskIntoConstraints = false
-        imageButton.translatesAutoresizingMaskIntoConstraints = false
-        imageButton2.translatesAutoresizingMaskIntoConstraints = false
+        horizButton.translatesAutoresizingMaskIntoConstraints = false
+        vertButton.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        view.addSubviews([firstButton, secondButton, aButton, bButton, cButton, tagButton, lblTag, imageButton, imageButton2, sizeButton])
+        view.addSubviews([firstButton, secondButton, aButton, bButton, cButton, tagButton, lblTag, horizButton, vertButton, sizeButton])
     }
     
     func createConstraints() {
@@ -144,8 +144,8 @@ class ViewController: UIViewController {
             "cBtn": cButton,
             "tag": tagButton,
             "lbl": lblTag,
-            "imgBtn": imageButton,
-            "imgBtn2": imageButton2,
+            "imgBtn": horizButton,
+            "imgBtn2": vertButton,
             "sizeBtn": sizeButton
             ]
         activateConstraints("V:|-100-[btn1(50)]-20-[btn2(50)]-20-[aBtn(50)]-20-[tag]-20-[imgBtn(40)]-20-[imgBtn2(80)]", views: dict)
@@ -160,9 +160,9 @@ class ViewController: UIViewController {
         cButton.equalConstraints([.top, .width, .height], to: aButton)
         tagButton.equalConstraints([.left, .width], to: aButton)
         lblTag.equalConstraints([.centerY], to: aButton)
-        imageButton.equalConstraints([.left], to: aButton)
-        imageButton2.equalConstraints([.left, .width], to: aButton)
-        sizeButton.equalConstraints([.top], to: imageButton2)
+        horizButton.equalConstraints([.left], to: aButton)
+        vertButton.equalConstraints([.left, .width], to: aButton)
+        sizeButton.equalConstraints([.top], to: vertButton)
     }
     
     func createSnippets() {
@@ -236,17 +236,17 @@ class ViewController: UIViewController {
         
         // TODO - review - use init
         // for snippet 13
-        imageButton.setImage(UIImage(named: "1-2-3"), for: .normal)
-        imageButton.setTitle("image", for: .normal)
-        imageButton.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
-        imageButton.setTitleColor(.blue, for: .normal)
+        horizButton.setImage(UIImage(named: "1-2-3"), for: .normal)
+        horizButton.setTitle("image", for: .normal)
+        horizButton.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
+        horizButton.setTitleColor(.blue, for: .normal)
 
         // TODO - review - use init
         // for snipppet 14
-        imageButton2.setImage(UIImage(named: "1-2-3"), for: .normal)
-        imageButton2.setTitle("image2", for: .normal)
-        imageButton2.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
-        imageButton2.setTitleColor(.blue, for: .normal)
+        vertButton.setImage(UIImage(named: "1-2-3"), for: .normal)
+        vertButton.setTitle("image2", for: .normal)
+        vertButton.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
+        vertButton.setTitleColor(.blue, for: .normal)
         
         _ = Snippet( 16, "UIButton size to fit", [
             "https://stackoverflow.com/questions/4135032/ios-uibutton-resize-according-to-text-length",
@@ -256,6 +256,20 @@ class ViewController: UIViewController {
         
         // for snippet 17
         sizeButton.addTarget(self, action:#selector(self.sizeButtonPressed), for: .touchUpInside)
+        
+        _ = Snippet( 18, "UIButton set attributed title", [
+            "https://stackoverflow.com/questions/29045750/attributed-text-center-alignment"
+        ])
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.alignment = .center
+        let attributes: [NSAttributedStringKey : Any] = [
+            NSAttributedStringKey.font: UIFont.init(name: "Baskerville", size: 18.0)!,
+            NSAttributedStringKey.foregroundColor: UIColor.purple,
+            NSAttributedStringKey.paragraphStyle: paragraph
+        ]
+        let title = NSAttributedString(string: "foobar", attributes: attributes)
+        horizButton.setAttributedTitle(title, for: .normal)
+
         
     }
 
@@ -289,8 +303,8 @@ class ViewController: UIViewController {
         _ = Snippet( 17, "UIButton image with tint color", [
             "https://stackoverflow.com/questions/19829356/color-tint-uibutton-image"
         ])
-        imageButton2.setImage(UIImage(named: "1-2-3")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate), for: .normal)
-        imageButton2.tintColor = .red
+        vertButton.setImage(UIImage(named: "1-2-3")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate), for: .normal)
+        vertButton.tintColor = .red
         
     }
     
