@@ -9,8 +9,6 @@
 import UIKit
 
 
-// TODO: BUG - extra bracket on some snippets!
-
 // TODO:
 // button - radio
 // UIColor extension, named color
@@ -136,6 +134,9 @@ class ViewController: UIViewController {
     let horizButton = HorizButton()
     let vertButton = VertButton()
     let closureButton = ClosureButton("10", tag: 10)
+    
+    let btn22 = UIButton("btn22")
+    let btn22a = UIButton("tap")
 
     var currentButton: UIButton!
     
@@ -153,7 +154,7 @@ class ViewController: UIViewController {
         vertButton.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         view.addSubviews([firstButton, secondButton, aButton, bButton, cButton, tagButton, lblTag,
-                          horizButton, vertButton, sizeButton, twoLinesButton, closureButton])
+                          horizButton, vertButton, sizeButton, twoLinesButton, closureButton, btn22, btn22a])
     }
     
     func createConstraints() {
@@ -169,14 +170,17 @@ class ViewController: UIViewController {
             "imgBtn2": vertButton,
             "sizeBtn": sizeButton,
             "twoLBtn": twoLinesButton,
-            "cloBtn": closureButton
+            "cloBtn": closureButton,
+            "btn22": btn22,
+            "btn22a": btn22a
             ]
-        activateConstraints("V:|-100-[btn1(50)]-20-[btn2(50)]-20-[aBtn(50)]-20-[tag]-20-[imgBtn(40)]-20-[imgBtn2(80)]-[cloBtn]", views: dict)
+        activateConstraints("V:|-100-[btn1(50)]-20-[btn2(50)]-20-[aBtn(50)]-20-[tag]-20-[imgBtn(40)]-20-[imgBtn2(80)]-[cloBtn]-[btn22]", views: dict)
         activateConstraints("V:[twoLBtn(80)]", views: dict)
         activateConstraints("H:[btn1(150)]", views: dict)
         activateConstraints("H:|-20-[aBtn(80)]-20-[bBtn]-20-[cBtn]-20-[lbl]", views: dict)
         activateConstraints("H:|-[imgBtn]-|", views: dict)
         activateConstraints("H:|-[imgBtn2]-20-[sizeBtn]-[twoLBtn(50)]", views: dict)
+        activateConstraints("H:|-[btn22]-[btn22a]", views: dict)
         firstButton.equalConstraints([.centerX], to: view)
         secondButton.equalConstraints([.centerX], to: view)
         secondButton.equalConstraints([.width], to: firstButton)
@@ -189,6 +193,7 @@ class ViewController: UIViewController {
         sizeButton.equalConstraints([.top], to: vertButton)
         twoLinesButton.equalConstraints([.top], to: vertButton)
         closureButton.equalConstraints([.left, .width], to: aButton)
+        btn22a.equalConstraints([.top], to: btn22)
     }
     
     func createSnippets() {
@@ -239,7 +244,8 @@ class ViewController: UIViewController {
         currentButton = aButton
         
         _ = Snippet( 8, "UIButton add target action for touchUpInside", [
-            "https://stackoverflow.com/questions/24102191/make-a-uibutton-programmatically-in-swift"
+            "https://stackoverflow.com/questions/24102191/make-a-uibutton-programmatically-in-swift",
+            "http://rshankar.com/different-ways-to-connect-ibaction-to-uibutton/"
         ])
         aButton.addTarget(self, action:#selector(self.buttonPressed), for: .touchUpInside)
 
@@ -310,6 +316,10 @@ class ViewController: UIViewController {
             self.closureButton.setTitle(String(self.closureButton.tag), for: .normal)
         }
         
+        // for snippet 22
+        btn22.addTarget(self, action:#selector(self.btn22Touched), for: .touchUpInside)
+        btn22a.addTarget(self, action:#selector(self.btn22aTouched), for: .touchUpInside)
+        
     }
 
     @objc func viewWithTag(sender: UIButton!) {
@@ -345,6 +355,20 @@ class ViewController: UIViewController {
         ])
         vertButton.setImage(UIImage(named: "1-2-3")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate), for: .normal)
         vertButton.tintColor = .red
+        
+    }
+    
+    @objc func btn22Touched(sender: UIButton!) {
+        btn22.setTitle("ok", for: .normal)
+    }
+    
+    @objc func btn22aTouched(sender: UIButton!) {
+        
+        _ = Snippet( 22, "UIButton touched event called programatically", [
+            "https://stackoverflow.com/questions/36465953/programmatically-tap-uibutton-swift",
+            "https://stackoverflow.com/questions/39336562/how-to-click-a-button-programmatically"
+        ])
+        btn22.sendActions(for: .touchUpInside)
         
     }
     
