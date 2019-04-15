@@ -19,9 +19,31 @@
 
 import UIKit
 
+// TODO color name - name, extension
+/*
+ _ = Snippet( 15, "UIButton convenience init", [
+ ])
+ */
+extension UIButton {
+    convenience init(_ title: String = "", tag: Int = 0) {
+        self.init(type: .custom)
+        setTitle(title, for: .normal)
+        setTitleColor(.blue, for: .normal)
+        setTitleColor(.red, for: .selected)
+        setTitleColor(.gray, for: .disabled)
+        backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
+        translatesAutoresizingMaskIntoConstraints = false
+        layer.cornerRadius = 10
+        clipsToBounds = true
+        self.tag = tag
+    }
+}
+
+
 class ButtonViewController: UIViewController {
 
     let btn1 = UIButton()
+    let btn6 = UIButton("Disabled")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,23 +55,27 @@ class ButtonViewController: UIViewController {
     func createSubviews() {
         btn1.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        view.addSubviews([btn1])
+        view.addSubviews([btn1, btn6])
     }
     
     func createConstraints() {
         let dict: [String: Any] = [
             "btn1": btn1,
+            "btn6": btn6,
         ]
 
         activateConstraints("V:|-50-[btn1(50)]", views: dict)
-        activateConstraints("H:|-10-[btn1(150)]", views: dict)
+        activateConstraints("H:|-10-[btn1(150)]-10-[btn6]", views: dict)
+        btn6.equalConstraints([.width, .top, .height], to: btn1)
     }
     
     func createSnippets() {
         snippets1to5()
+        snippet6()
     }
     
     func snippets1to5() {
+        
         _ = Snippet( 1, "UIButton change text", [
             "https://stackoverflow.com/questions/1033763/is-it-possible-to-update-uibutton-title-text-programmatically"
             ])
@@ -78,8 +104,17 @@ class ButtonViewController: UIViewController {
             ])
         btn1.layer.cornerRadius = 10
         btn1.clipsToBounds = true
+        
     }
 
+    func snippet6() {
+        
+        _ = Snippet( 6, "UIButton set state enabled", [
+            "https://stackoverflow.com/questions/405134/manually-setting-a-uibutton-state"
+            ])
+        btn6.isEnabled = false
+        
+    }
 }
 
 /*
@@ -90,23 +125,6 @@ extension UILabel {
         self.init()
         self.text = text
         translatesAutoresizingMaskIntoConstraints = false
-    }
-}
-
-// TODO color name - name, extension
-/*
- _ = Snippet( 15, "UIButton convenience init", [
- ])
- */
-extension UIButton {
-    convenience init(_ title: String = "", tag: Int = 0) {
-        self.init(type: .custom)
-        setTitle(title, for: .normal)
-        setTitleColor(.blue, for: .normal)
-        setTitleColor(.red, for: .selected)
-        backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
-        translatesAutoresizingMaskIntoConstraints = false
-        self.tag = tag
     }
 }
 
@@ -181,9 +199,7 @@ class ClosureButton: UIButton {
 }
 
 class ViewController: UIViewController {
-    
-    let secondButton = UIButton()
-    
+ 
     let aButton = UIButton("a", tag: 1)
     let bButton = UIButton("b", tag: 2)
     let cButton = UIButton("c", tag: 3)
@@ -205,7 +221,6 @@ class ViewController: UIViewController {
     
  
     func createSubviews() {
-        secondButton.translatesAutoresizingMaskIntoConstraints = false
         horizButton.translatesAutoresizingMaskIntoConstraints = false
         vertButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubviews([secondButton, aButton, bButton, cButton, tagButton, lblTag,
@@ -214,7 +229,6 @@ class ViewController: UIViewController {
     
     func createConstraints() {
         let dict: [String: Any] = [
-            "btn2": secondButton,
             "aBtn": aButton,
             "bBtn": bButton,
             "cBtn": cButton,
@@ -252,15 +266,6 @@ class ViewController: UIViewController {
     
     func createSnippets() {
  
-        secondButton.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
-        secondButton.setTitle("Disabled", for: .normal)
-        secondButton.setTitleColor(.gray, for: .disabled)
-        
-        _ = Snippet( 6, "UIButton set state enabled", [
-            "https://stackoverflow.com/questions/405134/manually-setting-a-uibutton-state"
-            ])
-        secondButton.isEnabled = false
-        
         _ = Snippet( 7, "UIButton set state selected", [
             "https://stackoverflow.com/questions/25944791/how-to-change-the-state-of-an-uibutton-in-ios-using-swift"
             ])

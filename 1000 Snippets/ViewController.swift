@@ -34,17 +34,17 @@ extension UILabel {
  _ = Snippet( 15, "UIButton convenience init", [
 ])
 */
-extension UIButton {
-    convenience init(_ title: String = "", tag: Int = 0) {
-        self.init(type: .custom)
-        setTitle(title, for: .normal)
-        setTitleColor(.blue, for: .normal)
-        setTitleColor(.red, for: .selected)
-        backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
-        translatesAutoresizingMaskIntoConstraints = false
-        self.tag = tag
-    }
-}
+//extension UIButton {
+//    convenience init(_ title: String = "", tag: Int = 0) {
+//        self.init(type: .custom)
+//        setTitle(title, for: .normal)
+//        setTitleColor(.blue, for: .normal)
+//        setTitleColor(.red, for: .selected)
+//        backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
+//        translatesAutoresizingMaskIntoConstraints = false
+//        self.tag = tag
+//    }
+//}
 
 // TODO: review snippets 13 and 14
 
