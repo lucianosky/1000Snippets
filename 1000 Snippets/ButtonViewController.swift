@@ -19,6 +19,15 @@
 
 import UIKit
 
+// TODO - change to new class when doing UILabel snippets
+extension UILabel {
+    convenience init(_ text: String = "") {
+        self.init()
+        self.text = text
+        translatesAutoresizingMaskIntoConstraints = false
+    }
+}
+
 // TODO color name - name, extension
 /*
  _ = Snippet( 15, "UIButton convenience init", [
@@ -43,7 +52,13 @@ extension UIButton {
 class ButtonViewController: UIViewController {
 
     let btn1 = UIButton()
-    let btn6 = UIButton("Disabled")
+    let btn2 = UIButton("Disabled")
+    
+    let btn3a = UIButton("a", tag: 1)
+    let btn3b = UIButton("b", tag: 2)
+    let btn3c = UIButton("c", tag: 3)
+    var currentButton: UIButton!
+    let lbl3 = UILabel("Tag")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,23 +70,32 @@ class ButtonViewController: UIViewController {
     func createSubviews() {
         btn1.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        view.addSubviews([btn1, btn6])
+        view.addSubviews([btn1, btn2, btn3a, btn3b, btn3c, lbl3])
     }
     
     func createConstraints() {
         let dict: [String: Any] = [
             "btn1": btn1,
-            "btn6": btn6,
+            "btn2": btn2,
+            "btn3a": btn3a,
+            "btn3b": btn3b,
+            "btn3c": btn3c,
+            "lbl3": lbl3,
         ]
 
-        activateConstraints("V:|-50-[btn1(50)]", views: dict)
-        activateConstraints("H:|-10-[btn1(150)]-10-[btn6]", views: dict)
-        btn6.equalConstraints([.width, .top, .height], to: btn1)
+        activateConstraints("V:|-50-[btn1(50)]-[btn3a(50)]", views: dict)
+        activateConstraints("H:|-10-[btn1(150)]-10-[btn2]", views: dict)
+        activateConstraints("H:|-10-[btn3a(60)]-[btn3b]-[btn3c]-[lbl3]", views: dict)
+        btn2.equalConstraints([.width, .top, .height], to: btn1)
+        btn3b.equalConstraints([.width, .top, .height], to: btn3a)
+        btn3c.equalConstraints([.width, .top, .height], to: btn3a)
+        lbl3.equalConstraints([.width, .top, .height], to: btn3a)
     }
     
     func createSnippets() {
         snippets1to5()
         snippet6()
+        snippets7to8()
     }
     
     func snippets1to5() {
@@ -112,21 +136,52 @@ class ButtonViewController: UIViewController {
         _ = Snippet( 6, "UIButton set state enabled", [
             "https://stackoverflow.com/questions/405134/manually-setting-a-uibutton-state"
             ])
-        btn6.isEnabled = false
+        btn2.isEnabled = false
         
     }
+    
+    func snippets7to8() {
+        
+        _ = Snippet( 7, "UIButton set state selected", [
+            "https://stackoverflow.com/questions/25944791/how-to-change-the-state-of-an-uibutton-in-ios-using-swift"
+            ])
+        btn3a.isSelected = true
+        
+        currentButton = btn3a
+        
+        _ = Snippet( 8, "UIButton add target action for touchUpInside", [
+            "https://stackoverflow.com/questions/24102191/make-a-uibutton-programmatically-in-swift",
+            "http://rshankar.com/different-ways-to-connect-ibaction-to-uibutton/"
+            ])
+        btn3a.addTarget(self, action:#selector(self.buttonPressed), for: .touchUpInside)
+        
+        btn3b.addTarget(self, action:#selector(self.buttonPressed), for: .touchUpInside)
+        btn3c.addTarget(self, action:#selector(self.buttonPressed), for: .touchUpInside)
+
+    }
+    
+    // buttonPressed -> btn3xPressed
+    // lblTag -> lbl3
+    
+    @objc func buttonPressed(sender: UIButton!) {
+        if currentButton != sender {
+            currentButton.isSelected = false
+            sender.isSelected = true
+            currentButton = sender
+        }
+        
+        _ = Snippet( 10, "UIView use view (sender) tag", [
+            "https://stackoverflow.com/questions/30046540/get-button-pressed-id-on-swift-via-sender"
+            ])
+        lbl3.text = "Tag: \(sender.tag)"
+        
+    }
+    
+
+        
 }
 
 /*
-
-// TODO - change to new class when doing UILabel snippets
-extension UILabel {
-    convenience init(_ text: String = "") {
-        self.init()
-        self.text = text
-        translatesAutoresizingMaskIntoConstraints = false
-    }
-}
 
 // TODO: review snippets 13 and 14
 
@@ -200,16 +255,10 @@ class ClosureButton: UIButton {
 
 class ViewController: UIViewController {
  
-    let aButton = UIButton("a", tag: 1)
-    let bButton = UIButton("b", tag: 2)
-    let cButton = UIButton("c", tag: 3)
-    
     let tagButton = UIButton("tag")
     let sizeButton = UIButton("Very large title text")
     let twoLinesButton = UIButton("Foobar")
-    
-    let lblTag = UILabel("Tag")
-    
+ 
     let horizButton = HorizButton()
     let vertButton = VertButton()
     let closureButton = ClosureButton("10", tag: 10)
@@ -217,9 +266,6 @@ class ViewController: UIViewController {
     let btn22 = UIButton("btn22")
     let btn22a = UIButton("tap")
     
-    var currentButton: UIButton!
-    
- 
     func createSubviews() {
         horizButton.translatesAutoresizingMaskIntoConstraints = false
         vertButton.translatesAutoresizingMaskIntoConstraints = false
@@ -266,22 +312,6 @@ class ViewController: UIViewController {
     
     func createSnippets() {
  
-        _ = Snippet( 7, "UIButton set state selected", [
-            "https://stackoverflow.com/questions/25944791/how-to-change-the-state-of-an-uibutton-in-ios-using-swift"
-            ])
-        aButton.isSelected = true
-        
-        currentButton = aButton
-        
-        _ = Snippet( 8, "UIButton add target action for touchUpInside", [
-            "https://stackoverflow.com/questions/24102191/make-a-uibutton-programmatically-in-swift",
-            "http://rshankar.com/different-ways-to-connect-ibaction-to-uibutton/"
-            ])
-        aButton.addTarget(self, action:#selector(self.buttonPressed), for: .touchUpInside)
-        
-        bButton.addTarget(self, action:#selector(self.buttonPressed), for: .touchUpInside)
-        cButton.addTarget(self, action:#selector(self.buttonPressed), for: .touchUpInside)
-        
         tagButton.addTarget(self, action:#selector(self.viewWithTag), for: .touchUpInside)
         
         _ = Snippet( 11, "UIButton set image for state", [
@@ -360,20 +390,6 @@ class ViewController: UIViewController {
         if let button = self.view.viewWithTag(2) as? UIButton {
             buttonPressed(sender: button)
         }
-        
-    }
-    
-    @objc func buttonPressed(sender: UIButton!) {
-        if currentButton != sender {
-            currentButton.isSelected = false
-            sender.isSelected = true
-            currentButton = sender
-        }
-        
-        _ = Snippet( 10, "UIView use view (sender) tag", [
-            "https://stackoverflow.com/questions/30046540/get-button-pressed-id-on-swift-via-sender"
-            ])
-        lblTag.text = "Tag: \(sender.tag)"
         
     }
     

@@ -21,13 +21,13 @@ import UIKit
 // Place the attribution on the credits/description page of the application.
 
 // TODO - change to new class when doing UILabel snippets
-extension UILabel {
-    convenience init(_ text: String = "") {
-        self.init()
-        self.text = text
-        translatesAutoresizingMaskIntoConstraints = false
-    }
-}
+//extension UILabel {
+//    convenience init(_ text: String = "") {
+//        self.init()
+//        self.text = text
+//        translatesAutoresizingMaskIntoConstraints = false
+//    }
+//}
 
 // TODO color name - name, extension
 /*
