@@ -38,7 +38,7 @@ extension UILabel {
  ])
  */
 extension UIButton {
-    convenience init(_ title: String = "", tag: Int = 0) {
+    convenience init(_ title: String = "", tag: Int = 0, image: UIImage? = nil) {
         self.init(type: .custom)
         setTitle(title, for: .normal)
         setTitleColor(.blue, for: .normal)
@@ -50,6 +50,60 @@ extension UIButton {
         layer.cornerRadius = 10
         clipsToBounds = true
         self.tag = tag
+        if let image = image {
+            setImage(image, for: .normal)
+        }
+    }
+}
+
+// TODO: review snippets 13 and 14's Classes
+
+/*
+ _ = Snippet( 13, "UIButton image and text aligned horizontally full line extension", [
+ "https://stackoverflow.com/questions/33033737/add-rightview-in-uibutton",
+ "https://medium.com/@harmittaa/uibutton-with-label-text-and-right-aligned-image-a9d0f590bba1",
+ "https://stackoverflow.com/questions/17800288/autolayout-intrinsic-size-of-uibutton-does-not-include-title-insets"
+ ])
+ */
+class HorizButton: UIButton {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if imageView != nil {
+            imageEdgeInsets = UIEdgeInsets(top: 5, left: (bounds.width - 35), bottom: 5, right: 5)
+            titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: (imageView?.frame.width)!)
+        }
+    }
+}
+
+/*
+ _ = Snippet( 14, "UIButton image and text aligned vertically extension", [
+ "https://stackoverflow.com/questions/4201959/label-under-image-in-uibutton",
+ "https://stackoverflow.com/questions/34682737/button-with-image-and-text-vertically-aligned-using-autolayout-constraints"
+ ])
+ */
+class VertButton: UIButton {
+    var padding: CGFloat = 5.0 {
+        didSet {
+            setNeedsLayout()
+        }
+    }
+    override var intrinsicContentSize: CGSize {
+        let maxSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+        if let titleSize = titleLabel?.sizeThatFits(maxSize), let imageSize = imageView?.sizeThatFits(maxSize) {
+            let width = ceil(max(imageSize.width, titleSize.width))
+            let height = ceil(imageSize.height + titleSize.height + padding)
+            return CGSize(width: width, height: height)
+        }
+        return super.intrinsicContentSize
+    }
+    override func layoutSubviews() {
+        if let image = imageView?.image, let title = titleLabel?.attributedText {
+            let imageSize = image.size
+            let titleSize = title.size()
+            titleEdgeInsets = UIEdgeInsetsMake(0.0, -imageSize.width, -(imageSize.height + padding), 0.0)
+            imageEdgeInsets = UIEdgeInsetsMake(-(titleSize.height + padding), 0.0, 0.0, -titleSize.width)
+        }
+        super.layoutSubviews()
     }
 }
 
@@ -68,6 +122,9 @@ class ButtonViewController: UIViewController {
     
     let btn3a = UIButton("")
     let btn3b = UIButton("3b")
+    
+    let btn4h = HorizButton("Horiz", image: UIImage(named: "1-2-3"))
+    let btn5v = VertButton("Vert", image: UIImage(named: "1-2-3"))
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,7 +136,7 @@ class ButtonViewController: UIViewController {
     func createSubviews() {
         btn1a.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        view.addSubviews([btn1a, btn1b, btn2a, btn2b, btn2c, lbl2, btn2t, btn3a, btn3b])
+        view.addSubviews([btn1a, btn1b, btn2a, btn2b, btn2c, lbl2, btn2t, btn3a, btn3b, btn4h, btn5v])
     }
     
     func createConstraints() {
@@ -93,14 +150,18 @@ class ButtonViewController: UIViewController {
             "btn2t": btn2t,
             "btn3a": btn3a,
             "btn3b": btn3b,
+            "btn4h": btn4h,
+            "btn5v": btn5v,
         ]
 
-        activateConstraints("V:|-50-[btn1a(50)]-[btn2a(50)]-[btn3a(50)]", views: dict)
+        activateConstraints("V:|-50-[btn1a(50)]-[btn2a(50)]-[btn3a(50)]-[btn4h(50)]-[btn5v(80)]", views: dict)
         
-        activateConstraints("H:|-10-[btn1a(150)]-10-[btn1b]", views: dict)
-        activateConstraints("H:|-10-[btn2a(60)]-[btn2b]-[btn2c]-[btn2t]-[lbl2]", views: dict)
-        activateConstraints("H:|-10-[btn3a(100)]-[btn3b]", views: dict)
-        
+        activateConstraints("H:|-[btn1a(150)]-10-[btn1b]", views: dict)
+        activateConstraints("H:|-[btn2a(60)]-[btn2b]-[btn2c]-[btn2t]-[lbl2]", views: dict)
+        activateConstraints("H:|-[btn3a(100)]-[btn3b]", views: dict)
+        activateConstraints("H:|-[btn4h]-|", views: dict)
+        activateConstraints("H:|-[btn5v(100)]", views: dict)
+
         btn1b.equalConstraints([.width, .top, .height], to: btn1a)
         
         btn2b.equalConstraints([.width, .top, .height], to: btn2a)
@@ -238,57 +299,6 @@ class ButtonViewController: UIViewController {
 
 /*
 
-// TODO: review snippets 13 and 14
-
-/*
- _ = Snippet( 13, "UIButton image and text aligned horizontally full line extension", [
- "https://stackoverflow.com/questions/33033737/add-rightview-in-uibutton",
- "https://medium.com/@harmittaa/uibutton-with-label-text-and-right-aligned-image-a9d0f590bba1",
- "https://stackoverflow.com/questions/17800288/autolayout-intrinsic-size-of-uibutton-does-not-include-title-insets"
- ])
- */
-class HorizButton: UIButton {
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        if imageView != nil {
-            imageEdgeInsets = UIEdgeInsets(top: 5, left: (bounds.width - 35), bottom: 5, right: 5)
-            titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: (imageView?.frame.width)!)
-        }
-    }
-}
-
-/*
- _ = Snippet( 14, "UIButton image and text aligned vertically extension", [
- "https://stackoverflow.com/questions/4201959/label-under-image-in-uibutton",
- "https://stackoverflow.com/questions/34682737/button-with-image-and-text-vertically-aligned-using-autolayout-constraints"
- ])
- */
-class VertButton: UIButton {
-    var padding: CGFloat = 5.0 {
-        didSet {
-            setNeedsLayout()
-        }
-    }
-    override var intrinsicContentSize: CGSize {
-        let maxSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
-        if let titleSize = titleLabel?.sizeThatFits(maxSize), let imageSize = imageView?.sizeThatFits(maxSize) {
-            let width = ceil(max(imageSize.width, titleSize.width))
-            let height = ceil(imageSize.height + titleSize.height + padding)
-            return CGSize(width: width, height: height)
-        }
-        return super.intrinsicContentSize
-    }
-    override func layoutSubviews() {
-        if let image = imageView?.image, let title = titleLabel?.attributedText {
-            let imageSize = image.size
-            let titleSize = title.size()
-            titleEdgeInsets = UIEdgeInsetsMake(0.0, -imageSize.width, -(imageSize.height + padding), 0.0)
-            imageEdgeInsets = UIEdgeInsetsMake(-(titleSize.height + padding), 0.0, 0.0, -titleSize.width)
-        }
-        super.layoutSubviews()
-    }
-}
-
 /*
  _ = Snippet( 20, "UIButton responding to touch with closure (class)", [
  "https://stackoverflow.com/questions/37903243/swift-programmatically-create-function-for-button-with-a-closure"
@@ -313,7 +323,6 @@ class ViewController: UIViewController {
     let sizeButton = UIButton("Very large title text")
     let twoLinesButton = UIButton("Foobar")
  
-    let horizButton = HorizButton()
     let vertButton = VertButton()
     let closureButton = ClosureButton("10", tag: 10)
     
@@ -366,21 +375,6 @@ class ViewController: UIViewController {
     
     func createSnippets() {
  
- 
-        // TODO - review - use init
-        // for snippet 13
-        horizButton.setImage(UIImage(named: "1-2-3"), for: .normal)
-        horizButton.setTitle("image", for: .normal)
-        horizButton.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
-        horizButton.setTitleColor(.blue, for: .normal)
-        
-        // TODO - review - use init
-        // for snipppet 14
-        vertButton.setImage(UIImage(named: "1-2-3"), for: .normal)
-        vertButton.setTitle("image2", for: .normal)
-        vertButton.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
-        vertButton.setTitleColor(.blue, for: .normal)
-        
         _ = Snippet( 16, "UIButton size to fit", [
             "https://stackoverflow.com/questions/4135032/ios-uibutton-resize-according-to-text-length",
             "https://stackoverflow.com/questions/39283525/easiest-way-to-adjust-uibutton-size-based-on-text"

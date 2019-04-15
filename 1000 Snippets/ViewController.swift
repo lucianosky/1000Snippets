@@ -55,15 +55,15 @@ _ = Snippet( 13, "UIButton image and text aligned horizontally full line extensi
     "https://stackoverflow.com/questions/17800288/autolayout-intrinsic-size-of-uibutton-does-not-include-title-insets"
 ])
 */
-class HorizButton: UIButton {
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        if imageView != nil {
-            imageEdgeInsets = UIEdgeInsets(top: 5, left: (bounds.width - 35), bottom: 5, right: 5)
-            titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: (imageView?.frame.width)!)
-        }
-    }
-}
+//class HorizButton: UIButton {
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        if imageView != nil {
+//            imageEdgeInsets = UIEdgeInsets(top: 5, left: (bounds.width - 35), bottom: 5, right: 5)
+//            titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: (imageView?.frame.width)!)
+//        }
+//    }
+//}
 
 /*
 _ = Snippet( 14, "UIButton image and text aligned vertically extension", [
@@ -71,31 +71,31 @@ _ = Snippet( 14, "UIButton image and text aligned vertically extension", [
     "https://stackoverflow.com/questions/34682737/button-with-image-and-text-vertically-aligned-using-autolayout-constraints"
 ])
 */
-class VertButton: UIButton {
-    var padding: CGFloat = 5.0 {
-        didSet {
-            setNeedsLayout()
-        }
-    }
-    override var intrinsicContentSize: CGSize {
-        let maxSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
-        if let titleSize = titleLabel?.sizeThatFits(maxSize), let imageSize = imageView?.sizeThatFits(maxSize) {
-            let width = ceil(max(imageSize.width, titleSize.width))
-            let height = ceil(imageSize.height + titleSize.height + padding)
-            return CGSize(width: width, height: height)
-        }
-        return super.intrinsicContentSize
-    }
-    override func layoutSubviews() {
-        if let image = imageView?.image, let title = titleLabel?.attributedText {
-            let imageSize = image.size
-            let titleSize = title.size()
-            titleEdgeInsets = UIEdgeInsetsMake(0.0, -imageSize.width, -(imageSize.height + padding), 0.0)
-            imageEdgeInsets = UIEdgeInsetsMake(-(titleSize.height + padding), 0.0, 0.0, -titleSize.width)
-        }
-        super.layoutSubviews()
-    }
-}
+//class VertButton: UIButton {
+//    var padding: CGFloat = 5.0 {
+//        didSet {
+//            setNeedsLayout()
+//        }
+//    }
+//    override var intrinsicContentSize: CGSize {
+//        let maxSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+//        if let titleSize = titleLabel?.sizeThatFits(maxSize), let imageSize = imageView?.sizeThatFits(maxSize) {
+//            let width = ceil(max(imageSize.width, titleSize.width))
+//            let height = ceil(imageSize.height + titleSize.height + padding)
+//            return CGSize(width: width, height: height)
+//        }
+//        return super.intrinsicContentSize
+//    }
+//    override func layoutSubviews() {
+//        if let image = imageView?.image, let title = titleLabel?.attributedText {
+//            let imageSize = image.size
+//            let titleSize = title.size()
+//            titleEdgeInsets = UIEdgeInsetsMake(0.0, -imageSize.width, -(imageSize.height + padding), 0.0)
+//            imageEdgeInsets = UIEdgeInsetsMake(-(titleSize.height + padding), 0.0, 0.0, -titleSize.width)
+//        }
+//        super.layoutSubviews()
+//    }
+//}
 
 /*
 _ = Snippet( 20, "UIButton responding to touch with closure (class)", [
