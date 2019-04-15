@@ -7,6 +7,9 @@
 //
 
 // TODO:
+// check snippets unique numbers
+
+// TODO:
 // button - radio
 // UIColor extension, named color
 // UIButtonExtension, with corner radius, etc
@@ -34,9 +37,9 @@ extension UILabel {
 
 // TODO color name - name, extension
 /*
- _ = Snippet( 15, "UIButton convenience init", [
- ])
- */
+_ = Snippet( 15, "UIButton convenience init", [
+])
+*/
 extension UIButton {
     convenience init(_ title: String = "", tag: Int = 0, image: UIImage? = nil) {
         self.init(type: .custom)
@@ -59,12 +62,12 @@ extension UIButton {
 // TODO: review snippets 13 and 14's Classes
 
 /*
- _ = Snippet( 13, "UIButton image and text aligned horizontally full line extension", [
- "https://stackoverflow.com/questions/33033737/add-rightview-in-uibutton",
- "https://medium.com/@harmittaa/uibutton-with-label-text-and-right-aligned-image-a9d0f590bba1",
- "https://stackoverflow.com/questions/17800288/autolayout-intrinsic-size-of-uibutton-does-not-include-title-insets"
- ])
- */
+_ = Snippet( 13, "UIButton image and text aligned horizontally full line extension", [
+    "https://stackoverflow.com/questions/33033737/add-rightview-in-uibutton",
+    "https://medium.com/@harmittaa/uibutton-with-label-text-and-right-aligned-image-a9d0f590bba1",
+    "https://stackoverflow.com/questions/17800288/autolayout-intrinsic-size-of-uibutton-does-not-include-title-insets"
+])
+*/
 class HorizButton: UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -76,11 +79,11 @@ class HorizButton: UIButton {
 }
 
 /*
- _ = Snippet( 14, "UIButton image and text aligned vertically extension", [
- "https://stackoverflow.com/questions/4201959/label-under-image-in-uibutton",
- "https://stackoverflow.com/questions/34682737/button-with-image-and-text-vertically-aligned-using-autolayout-constraints"
- ])
- */
+_ = Snippet( 14, "UIButton image and text aligned vertically extension", [
+    "https://stackoverflow.com/questions/4201959/label-under-image-in-uibutton",
+    "https://stackoverflow.com/questions/34682737/button-with-image-and-text-vertically-aligned-using-autolayout-constraints"
+    ])
+*/
 class VertButton: UIButton {
     var padding: CGFloat = 5.0 {
         didSet {
