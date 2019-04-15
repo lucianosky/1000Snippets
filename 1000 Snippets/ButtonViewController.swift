@@ -56,18 +56,18 @@ extension UIButton {
 
 class ButtonViewController: UIViewController {
 
-    let btn1 = UIButton()
-    let btn2 = UIButton("Disabled")
+    let btn1a = UIButton()
+    let btn1b = UIButton("Disabled")
     
-    let btn3a = UIButton("a", tag: 1)
-    let btn3b = UIButton("b", tag: 2)
-    let btn3c = UIButton("c", tag: 3)
+    let btn2a = UIButton("a", tag: 1)
+    let btn2b = UIButton("b", tag: 2)
+    let btn2c = UIButton("c", tag: 3)
+    let btn2t = UIButton("tag=2")
     var currentButton: UIButton!
-    let lbl3 = UILabel("Tag")
-    let btn3t = UIButton("tag=2")
+    let lbl2 = UILabel("Tag")
     
-    let btn4 = UIButton("")
-    let btn5 = UIButton("3")
+    let btn3a = UIButton("")
+    let btn3b = UIButton("3b")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,35 +77,38 @@ class ButtonViewController: UIViewController {
     }
 
     func createSubviews() {
-        btn1.translatesAutoresizingMaskIntoConstraints = false
+        btn1a.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        view.addSubviews([btn1, btn2, btn3a, btn3b, btn3c, lbl3, btn3t, btn4, btn5])
+        view.addSubviews([btn1a, btn1b, btn2a, btn2b, btn2c, lbl2, btn2t, btn3a, btn3b])
     }
     
     func createConstraints() {
         let dict: [String: Any] = [
-            "btn1": btn1,
-            "btn2": btn2,
+            "btn1a": btn1a,
+            "btn1b": btn1b,
+            "btn2a": btn2a,
+            "btn2b": btn2b,
+            "btn2c": btn2c,
+            "lbl2": lbl2,
+            "btn2t": btn2t,
             "btn3a": btn3a,
             "btn3b": btn3b,
-            "btn3c": btn3c,
-            "lbl3": lbl3,
-            "btn3t": btn3t,
-            "btn4": btn4,
-            "btn5": btn5,
         ]
 
-        activateConstraints("V:|-50-[btn1(50)]-[btn3a(50)]-[btn4(50)]", views: dict)
+        activateConstraints("V:|-50-[btn1a(50)]-[btn2a(50)]-[btn3a(50)]", views: dict)
         
-        activateConstraints("H:|-10-[btn1(150)]-10-[btn2]", views: dict)
-        activateConstraints("H:|-10-[btn3a(60)]-[btn3b]-[btn3c]-[btn3t]-[lbl3]", views: dict)
-        activateConstraints("H:|-10-[btn4(100)]-[btn5]", views: dict)
-        btn2.equalConstraints([.width, .top, .height], to: btn1)
+        activateConstraints("H:|-10-[btn1a(150)]-10-[btn1b]", views: dict)
+        activateConstraints("H:|-10-[btn2a(60)]-[btn2b]-[btn2c]-[btn2t]-[lbl2]", views: dict)
+        activateConstraints("H:|-10-[btn3a(100)]-[btn3b]", views: dict)
+        
+        btn1b.equalConstraints([.width, .top, .height], to: btn1a)
+        
+        btn2b.equalConstraints([.width, .top, .height], to: btn2a)
+        btn2c.equalConstraints([.width, .top, .height], to: btn2a)
+        btn2t.equalConstraints([.width, .top, .height], to: btn2a)
+        lbl2.equalConstraints([.width, .top, .height], to: btn2a)
+        
         btn3b.equalConstraints([.width, .top, .height], to: btn3a)
-        btn3c.equalConstraints([.width, .top, .height], to: btn3a)
-        btn3t.equalConstraints([.width, .top, .height], to: btn3a)
-        lbl3.equalConstraints([.width, .top, .height], to: btn3a)
-        btn5.equalConstraints([.width, .top, .height], to: btn4)
     }
     
     func createSnippets() {
@@ -122,33 +125,33 @@ class ButtonViewController: UIViewController {
         _ = Snippet( 1, "UIButton change text", [
             "https://stackoverflow.com/questions/1033763/is-it-possible-to-update-uibutton-title-text-programmatically"
             ])
-        btn1.setTitle("1st Snippet", for: .normal)
-        btn1.setTitle("Highlighted", for: .highlighted)
+        btn1a.setTitle("1st Snippet", for: .normal)
+        btn1a.setTitle("Highlighted", for: .highlighted)
         
         _ = Snippet( 2, "UIButton change font name", [
             "https://stackoverflow.com/questions/25002017/how-to-change-font-of-uibutton-with-swift"
             ])
-        btn1.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17.0)
+        btn1a.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17.0)
         
         _ = Snippet( 3, "UIButton change font color", [
             "https://stackoverflow.com/questions/2474289/how-can-i-change-uibutton-title-color"
             ])
-        btn1.setTitleColor(.blue, for: .normal)
-        btn1.setTitleColor(.red, for: .highlighted)
+        btn1a.setTitleColor(.blue, for: .normal)
+        btn1a.setTitleColor(.red, for: .highlighted)
 
         // TODO: snippets for color - replace UIColor.init
 
         _ = Snippet( 4, "UIButton change background color", [
             "https://stackoverflow.com/questions/26600980/how-do-i-set-uibutton-background-color-forstate-uicontrolstate-highlighted-in-s"
         ])
-        btn1.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
+        btn1a.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
         
         _ = Snippet( 5, "UIButton rounded corners", [
             "https://stackoverflow.com/questions/38874517/how-to-make-a-simple-rounded-button-in-storyboard",
             "https://stackoverflow.com/questions/17401032/set-cornerradius-and-setbackgroundimage-to-uibutton"
         ])
-        btn1.layer.cornerRadius = 10
-        btn1.clipsToBounds = true
+        btn1a.layer.cornerRadius = 10
+        btn1a.clipsToBounds = true
         
     }
 
@@ -157,7 +160,7 @@ class ButtonViewController: UIViewController {
         _ = Snippet( 6, "UIButton set state enabled", [
             "https://stackoverflow.com/questions/405134/manually-setting-a-uibutton-state"
             ])
-        btn2.isEnabled = false
+        btn1b.isEnabled = false
         
     }
     
@@ -166,23 +169,23 @@ class ButtonViewController: UIViewController {
         _ = Snippet( 7, "UIButton set state selected", [
             "https://stackoverflow.com/questions/25944791/how-to-change-the-state-of-an-uibutton-in-ios-using-swift"
             ])
-        btn3a.isSelected = true
+        btn2a.isSelected = true
         
-        currentButton = btn3a
+        currentButton = btn2a
         
         _ = Snippet( 8, "UIButton add target action for touchUpInside", [
             "https://stackoverflow.com/questions/24102191/make-a-uibutton-programmatically-in-swift",
             "http://rshankar.com/different-ways-to-connect-ibaction-to-uibutton/"
             ])
-        btn3a.addTarget(self, action:#selector(self.btn3xPressed), for: .touchUpInside)
+        btn2a.addTarget(self, action:#selector(self.btn3xPressed), for: .touchUpInside)
         
-        btn3b.addTarget(self, action:#selector(self.btn3xPressed), for: .touchUpInside)
-        btn3c.addTarget(self, action:#selector(self.btn3xPressed), for: .touchUpInside)
+        btn2b.addTarget(self, action:#selector(self.btn3xPressed), for: .touchUpInside)
+        btn2c.addTarget(self, action:#selector(self.btn3xPressed), for: .touchUpInside)
 
     }
     
     func snippet9() {
-        btn3t.addTarget(self, action:#selector(self.btnWithTag2), for: .touchUpInside)
+        btn2t.addTarget(self, action:#selector(self.btnWithTag2), for: .touchUpInside)
     }
     
     func snippet11() {
@@ -190,18 +193,18 @@ class ButtonViewController: UIViewController {
         _ = Snippet( 11, "UIButton set image for state", [
             "https://stackoverflow.com/questions/26837371/how-to-change-uibutton-image-in-swift"
             ])
-        btn4.setImage(UIImage(named: "1-2-3"), for: .normal)
+        btn3a.setImage(UIImage(named: "1-2-3"), for: .normal)
         
     }
 
     func snippet12() {
         
-        btn5.setImage(UIImage(named: "1-2-3"), for: .normal)
+        btn3b.setImage(UIImage(named: "1-2-3"), for: .normal)
         
         _ = Snippet( 12, "UIButton padding right to image and before text", [
             "https://stackoverflow.com/questions/5363789/giving-a-text-margin-padding-to-the-uibutton-on-the-iphone"
             ])
-        btn5.imageEdgeInsets.right = 10
+        btn3b.imageEdgeInsets.right = 10
 
     }
     
@@ -215,7 +218,7 @@ class ButtonViewController: UIViewController {
         _ = Snippet( 10, "UIView use view (sender) tag", [
             "https://stackoverflow.com/questions/30046540/get-button-pressed-id-on-swift-via-sender"
             ])
-        lbl3.text = "Tag: \(sender.tag)"
+        lbl2.text = "Tag: \(sender.tag)"
         
     }
     
