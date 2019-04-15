@@ -17,6 +17,10 @@
 // For apps:
 // Place the attribution on the credits/description page of the application.
 
+// TEMP
+// buttonPressed -> btn3xPressed
+// lblTag -> lbl3
+
 import UIKit
 
 // TODO - change to new class when doing UILabel snippets
@@ -38,7 +42,8 @@ extension UIButton {
         self.init(type: .custom)
         setTitle(title, for: .normal)
         setTitleColor(.blue, for: .normal)
-        setTitleColor(.red, for: .selected)
+        setTitleColor(.red, for: .highlighted)
+        setTitleColor(.purple, for: .selected)
         setTitleColor(.gray, for: .disabled)
         backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
         translatesAutoresizingMaskIntoConstraints = false
@@ -60,6 +65,9 @@ class ButtonViewController: UIViewController {
     var currentButton: UIButton!
     let lbl3 = UILabel("Tag")
     let btn3t = UIButton("tag=2")
+    
+    let btn4 = UIButton("")
+    let btn5 = UIButton("3")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +79,7 @@ class ButtonViewController: UIViewController {
     func createSubviews() {
         btn1.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        view.addSubviews([btn1, btn2, btn3a, btn3b, btn3c, lbl3, btn3t])
+        view.addSubviews([btn1, btn2, btn3a, btn3b, btn3c, lbl3, btn3t, btn4, btn5])
     }
     
     func createConstraints() {
@@ -82,17 +90,22 @@ class ButtonViewController: UIViewController {
             "btn3b": btn3b,
             "btn3c": btn3c,
             "lbl3": lbl3,
-            "btn3t": btn3t
+            "btn3t": btn3t,
+            "btn4": btn4,
+            "btn5": btn5,
         ]
 
-        activateConstraints("V:|-50-[btn1(50)]-[btn3a(50)]", views: dict)
+        activateConstraints("V:|-50-[btn1(50)]-[btn3a(50)]-[btn4(50)]", views: dict)
+        
         activateConstraints("H:|-10-[btn1(150)]-10-[btn2]", views: dict)
         activateConstraints("H:|-10-[btn3a(60)]-[btn3b]-[btn3c]-[btn3t]-[lbl3]", views: dict)
+        activateConstraints("H:|-10-[btn4(100)]-[btn5]", views: dict)
         btn2.equalConstraints([.width, .top, .height], to: btn1)
         btn3b.equalConstraints([.width, .top, .height], to: btn3a)
         btn3c.equalConstraints([.width, .top, .height], to: btn3a)
         btn3t.equalConstraints([.width, .top, .height], to: btn3a)
         lbl3.equalConstraints([.width, .top, .height], to: btn3a)
+        btn5.equalConstraints([.width, .top, .height], to: btn4)
     }
     
     func createSnippets() {
@@ -100,6 +113,8 @@ class ButtonViewController: UIViewController {
         snippet6()
         snippets7to8()
         snippet9()
+        snippet11()
+        snippet12()
     }
     
     func snippets1to5() {
@@ -170,8 +185,25 @@ class ButtonViewController: UIViewController {
         btn3t.addTarget(self, action:#selector(self.btnWithTag2), for: .touchUpInside)
     }
     
-    // buttonPressed -> btn3xPressed
-    // lblTag -> lbl3
+    func snippet11() {
+        
+        _ = Snippet( 11, "UIButton set image for state", [
+            "https://stackoverflow.com/questions/26837371/how-to-change-uibutton-image-in-swift"
+            ])
+        btn4.setImage(UIImage(named: "1-2-3"), for: .normal)
+        
+    }
+
+    func snippet12() {
+        
+        btn5.setImage(UIImage(named: "1-2-3"), for: .normal)
+        
+        _ = Snippet( 12, "UIButton padding right to image and before text", [
+            "https://stackoverflow.com/questions/5363789/giving-a-text-margin-padding-to-the-uibutton-on-the-iphone"
+            ])
+        btn5.imageEdgeInsets.right = 10
+
+    }
     
     @objc func btn3xPressed(sender: UIButton!) {
         if currentButton != sender {
@@ -331,18 +363,7 @@ class ViewController: UIViewController {
     
     func createSnippets() {
  
-        _ = Snippet( 11, "UIButton set image for state", [
-            "https://stackoverflow.com/questions/26837371/how-to-change-uibutton-image-in-swift"
-            ])
-        aButton.setImage(UIImage(named: "1-2-3"), for: .normal)
-        
-        bButton.setImage(UIImage(named: "1-2-3"), for: .normal)
-        
-        _ = Snippet( 12, "UIButton padding right to image and before text", [
-            "https://stackoverflow.com/questions/5363789/giving-a-text-margin-padding-to-the-uibutton-on-the-iphone"
-            ])
-        bButton.imageEdgeInsets.right = 10
-        
+ 
         // TODO - review - use init
         // for snippet 13
         horizButton.setImage(UIImage(named: "1-2-3"), for: .normal)
