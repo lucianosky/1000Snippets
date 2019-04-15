@@ -59,6 +59,7 @@ class ButtonViewController: UIViewController {
     let btn3c = UIButton("c", tag: 3)
     var currentButton: UIButton!
     let lbl3 = UILabel("Tag")
+    let btn3t = UIButton("tag=2")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,7 +71,7 @@ class ButtonViewController: UIViewController {
     func createSubviews() {
         btn1.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        view.addSubviews([btn1, btn2, btn3a, btn3b, btn3c, lbl3])
+        view.addSubviews([btn1, btn2, btn3a, btn3b, btn3c, lbl3, btn3t])
     }
     
     func createConstraints() {
@@ -81,14 +82,16 @@ class ButtonViewController: UIViewController {
             "btn3b": btn3b,
             "btn3c": btn3c,
             "lbl3": lbl3,
+            "btn3t": btn3t
         ]
 
         activateConstraints("V:|-50-[btn1(50)]-[btn3a(50)]", views: dict)
         activateConstraints("H:|-10-[btn1(150)]-10-[btn2]", views: dict)
-        activateConstraints("H:|-10-[btn3a(60)]-[btn3b]-[btn3c]-[lbl3]", views: dict)
+        activateConstraints("H:|-10-[btn3a(60)]-[btn3b]-[btn3c]-[btn3t]-[lbl3]", views: dict)
         btn2.equalConstraints([.width, .top, .height], to: btn1)
         btn3b.equalConstraints([.width, .top, .height], to: btn3a)
         btn3c.equalConstraints([.width, .top, .height], to: btn3a)
+        btn3t.equalConstraints([.width, .top, .height], to: btn3a)
         lbl3.equalConstraints([.width, .top, .height], to: btn3a)
     }
     
@@ -96,6 +99,7 @@ class ButtonViewController: UIViewController {
         snippets1to5()
         snippet6()
         snippets7to8()
+        snippet9()
     }
     
     func snippets1to5() {
@@ -153,17 +157,21 @@ class ButtonViewController: UIViewController {
             "https://stackoverflow.com/questions/24102191/make-a-uibutton-programmatically-in-swift",
             "http://rshankar.com/different-ways-to-connect-ibaction-to-uibutton/"
             ])
-        btn3a.addTarget(self, action:#selector(self.buttonPressed), for: .touchUpInside)
+        btn3a.addTarget(self, action:#selector(self.btn3xPressed), for: .touchUpInside)
         
-        btn3b.addTarget(self, action:#selector(self.buttonPressed), for: .touchUpInside)
-        btn3c.addTarget(self, action:#selector(self.buttonPressed), for: .touchUpInside)
+        btn3b.addTarget(self, action:#selector(self.btn3xPressed), for: .touchUpInside)
+        btn3c.addTarget(self, action:#selector(self.btn3xPressed), for: .touchUpInside)
 
+    }
+    
+    func snippet9() {
+        btn3t.addTarget(self, action:#selector(self.btnWithTag2), for: .touchUpInside)
     }
     
     // buttonPressed -> btn3xPressed
     // lblTag -> lbl3
     
-    @objc func buttonPressed(sender: UIButton!) {
+    @objc func btn3xPressed(sender: UIButton!) {
         if currentButton != sender {
             currentButton.isSelected = false
             sender.isSelected = true
@@ -177,6 +185,16 @@ class ButtonViewController: UIViewController {
         
     }
     
+    @objc func btnWithTag2(sender: UIButton!) {
+        
+        _ = Snippet( 9, "UIView viewWithTag get view by tag", [
+            "https://stackoverflow.com/questions/28473893/referencing-a-uibutton-by-tag-value"
+            ])
+        if let button = self.view.viewWithTag(2) as? UIButton {
+            btn3xPressed(sender: button)
+        }
+        
+    }
 
         
 }
@@ -255,7 +273,6 @@ class ClosureButton: UIButton {
 
 class ViewController: UIViewController {
  
-    let tagButton = UIButton("tag")
     let sizeButton = UIButton("Very large title text")
     let twoLinesButton = UIButton("Foobar")
  
@@ -269,7 +286,7 @@ class ViewController: UIViewController {
     func createSubviews() {
         horizButton.translatesAutoresizingMaskIntoConstraints = false
         vertButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubviews([secondButton, aButton, bButton, cButton, tagButton, lblTag,
+        view.addSubviews([secondButton, aButton, bButton, cButton, btn3t, lblTag,
                           horizButton, vertButton, sizeButton, twoLinesButton, closureButton, btn22, btn22a])
     }
     
@@ -278,7 +295,7 @@ class ViewController: UIViewController {
             "aBtn": aButton,
             "bBtn": bButton,
             "cBtn": cButton,
-            "tag": tagButton,
+            "tag": btn3t,
             "lbl": lblTag,
             "imgBtn": horizButton,
             "imgBtn2": vertButton,
@@ -300,7 +317,7 @@ class ViewController: UIViewController {
         secondButton.equalConstraints([.width], to: firstButton)
         bButton.equalConstraints([.top, .width, .height], to: aButton)
         cButton.equalConstraints([.top, .width, .height], to: aButton)
-        tagButton.equalConstraints([.left, .width], to: aButton)
+        btn3t.equalConstraints([.left, .width], to: aButton)
         lblTag.equalConstraints([.centerY], to: aButton)
         horizButton.equalConstraints([.left], to: aButton)
         vertButton.equalConstraints([.left, .width], to: aButton)
@@ -312,8 +329,6 @@ class ViewController: UIViewController {
     
     func createSnippets() {
  
-        tagButton.addTarget(self, action:#selector(self.viewWithTag), for: .touchUpInside)
-        
         _ = Snippet( 11, "UIButton set image for state", [
             "https://stackoverflow.com/questions/26837371/how-to-change-uibutton-image-in-swift"
             ])
@@ -381,18 +396,7 @@ class ViewController: UIViewController {
         btn22a.addTarget(self, action:#selector(self.btn22aTouched), for: .touchUpInside)
         
     }
-    
-    @objc func viewWithTag(sender: UIButton!) {
-        
-        _ = Snippet( 9, "UIView viewWithTag get view by tag", [
-            "https://stackoverflow.com/questions/28473893/referencing-a-uibutton-by-tag-value"
-            ])
-        if let button = self.view.viewWithTag(2) as? UIButton {
-            buttonPressed(sender: button)
-        }
-        
-    }
-    
+ 
     @objc func sizeButtonPressed(sender: UIButton!) {
         
         _ = Snippet( 17, "UIButton image with tint color", [
