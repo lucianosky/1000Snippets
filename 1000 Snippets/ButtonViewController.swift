@@ -124,12 +124,14 @@ class ButtonViewController: UIViewController {
         // TODO: snippets for color - replace UIColor.init
 
         _ = Snippet( 4, "UIButton change background color", [
-            ])
+            "https://stackoverflow.com/questions/26600980/how-do-i-set-uibutton-background-color-forstate-uicontrolstate-highlighted-in-s"
+        ])
         btn1.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
         
         _ = Snippet( 5, "UIButton rounded corners", [
-            "https://stackoverflow.com/questions/38874517/how-to-make-a-simple-rounded-button-in-storyboard"
-            ])
+            "https://stackoverflow.com/questions/38874517/how-to-make-a-simple-rounded-button-in-storyboard",
+            "https://stackoverflow.com/questions/17401032/set-cornerradius-and-setbackgroundimage-to-uibutton"
+        ])
         btn1.layer.cornerRadius = 10
         btn1.clipsToBounds = true
         
