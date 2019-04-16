@@ -127,7 +127,12 @@ class ButtonViewController: UIViewController {
     let btn3b = UIButton("3b")
     
     let btn4h = HorizButton("Horiz", image: UIImage(named: "1-2-3"))
+    
     let btn5v = VertButton("Vert", image: UIImage(named: "1-2-3"))
+    let btn5b = UIButton("Size to fit button")
+    
+    let btn6a = UIButton("Image tint")
+    let btn6b = UIButton("", image: UIImage(named: "1-2-3"))
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -139,31 +144,27 @@ class ButtonViewController: UIViewController {
     func createSubviews() {
         btn1a.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        view.addSubviews([btn1a, btn1b, btn2a, btn2b, btn2c, lbl2, btn2t, btn3a, btn3b, btn4h, btn5v])
+        view.addSubviews([btn1a, btn1b, btn2a, btn2b, btn2c, lbl2, btn2t, btn3a, btn3b, btn4h, btn5v, btn5b, btn6a, btn6b])
     }
     
     func createConstraints() {
         let dict: [String: Any] = [
-            "btn1a": btn1a,
-            "btn1b": btn1b,
-            "btn2a": btn2a,
-            "btn2b": btn2b,
-            "btn2c": btn2c,
-            "lbl2": lbl2,
-            "btn2t": btn2t,
-            "btn3a": btn3a,
-            "btn3b": btn3b,
+            "btn1a": btn1a, "btn1b": btn1b,
+            "btn2a": btn2a, "btn2b": btn2b, "btn2c": btn2c, "lbl2": lbl2, "btn2t": btn2t,
+            "btn3a": btn3a, "btn3b": btn3b,
             "btn4h": btn4h,
-            "btn5v": btn5v,
+            "btn5v": btn5v, "btn5b": btn5b,
+            "btn6a": btn6a, "btn6b": btn6b,
         ]
 
-        activateConstraints("V:|-50-[btn1a(50)]-[btn2a(50)]-[btn3a(50)]-[btn4h(50)]-[btn5v(80)]", views: dict)
+        activateConstraints("V:|-50-[btn1a(50)]-[btn2a(50)]-[btn3a(50)]-[btn4h(50)]-[btn5v(80)]-[btn6a(50)]", views: dict)
         
         activateConstraints("H:|-[btn1a(150)]-10-[btn1b]", views: dict)
         activateConstraints("H:|-[btn2a(60)]-[btn2b]-[btn2c]-[btn2t]-[lbl2]", views: dict)
         activateConstraints("H:|-[btn3a(100)]-[btn3b]", views: dict)
         activateConstraints("H:|-[btn4h]-|", views: dict)
-        activateConstraints("H:|-[btn5v(100)]", views: dict)
+        activateConstraints("H:|-[btn5v(100)]-[btn5b]", views: dict)
+        activateConstraints("H:|-[btn6a(100)]-[btn6b]", views: dict)
 
         btn1b.equalConstraints([.width, .top, .height], to: btn1a)
         
@@ -173,6 +174,10 @@ class ButtonViewController: UIViewController {
         lbl2.equalConstraints([.width, .top, .height], to: btn2a)
         
         btn3b.equalConstraints([.width, .top, .height], to: btn3a)
+
+        btn5b.equalConstraints([.top], to: btn5v)
+
+        btn6b.equalConstraints([.width, .top, .height], to: btn6a)
     }
     
     func createSnippets() {
@@ -182,6 +187,8 @@ class ButtonViewController: UIViewController {
         snippet9()
         snippet11()
         snippet12()
+        snippet16()
+        snippet17()
     }
     
     func snippets1to5() {
@@ -272,6 +279,20 @@ class ButtonViewController: UIViewController {
 
     }
     
+    func snippet16() {
+        
+        _ = Snippet( 16, "UIButton size to fit", [
+            "https://stackoverflow.com/questions/4135032/ios-uibutton-resize-according-to-text-length",
+            "https://stackoverflow.com/questions/39283525/easiest-way-to-adjust-uibutton-size-based-on-text"
+            ])
+        btn5b.sizeToFit()
+
+    }
+    
+    func snippet17() {
+        btn6a.addTarget(self, action:#selector(self.changeBtnImageTint), for: .touchUpInside)
+    }
+    
     @objc func btn3xPressed(sender: UIButton!) {
         if currentButton != sender {
             currentButton.isSelected = false
@@ -296,6 +317,22 @@ class ButtonViewController: UIViewController {
         }
         
     }
+
+    @objc func changeBtnImageTint(sender: UIButton!) {
+        
+        _ = Snippet( 17, "UIButton image with tint color", [
+            "https://stackoverflow.com/questions/19829356/color-tint-uibutton-image",
+            "https://stackoverflow.com/questions/27163171/change-color-of-png-in-buttons-ios"
+            ])
+        btn6b.setImage(UIImage(named: "1-2-3")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate), for: .normal)
+        btn6b.tintColor = .blue
+        
+    }
+    
+    @objc func sizeButtonPressed(sender: UIButton!) {
+        
+    }
+    
 
         
 }
@@ -323,7 +360,6 @@ class ClosureButton: UIButton {
 
 class ViewController: UIViewController {
  
-    let sizeButton = UIButton("Very large title text")
     let twoLinesButton = UIButton("Foobar")
  
     let vertButton = VertButton()
@@ -378,15 +414,6 @@ class ViewController: UIViewController {
     
     func createSnippets() {
  
-        _ = Snippet( 16, "UIButton size to fit", [
-            "https://stackoverflow.com/questions/4135032/ios-uibutton-resize-according-to-text-length",
-            "https://stackoverflow.com/questions/39283525/easiest-way-to-adjust-uibutton-size-based-on-text"
-            ])
-        sizeButton.sizeToFit()
-        
-        // for snippet 17
-        sizeButton.addTarget(self, action:#selector(self.sizeButtonPressed), for: .touchUpInside)
-        
         _ = Snippet( 18, "UIButton set attributed title", [
             "https://stackoverflow.com/questions/29045750/attributed-text-center-alignment"
             ])
@@ -420,17 +447,6 @@ class ViewController: UIViewController {
         
     }
  
-    @objc func sizeButtonPressed(sender: UIButton!) {
-        
-        _ = Snippet( 17, "UIButton image with tint color", [
-            "https://stackoverflow.com/questions/19829356/color-tint-uibutton-image",
-            "https://stackoverflow.com/questions/27163171/change-color-of-png-in-buttons-ios"
-            ])
-        vertButton.setImage(UIImage(named: "1-2-3")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate), for: .normal)
-        vertButton.tintColor = .red
-        
-    }
-    
     @objc func btn22Touched(sender: UIButton!) {
         btn22.setTitle("ok", for: .normal)
     }
