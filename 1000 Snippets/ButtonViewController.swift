@@ -328,12 +328,6 @@ class ButtonViewController: UIViewController {
         btn6b.tintColor = .blue
         
     }
-    
-    @objc func sizeButtonPressed(sender: UIButton!) {
-        
-    }
-    
-
         
 }
 
