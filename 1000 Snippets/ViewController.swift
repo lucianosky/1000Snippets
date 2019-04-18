@@ -105,16 +105,16 @@ _ = Snippet( 20, "UIButton responding to touch with closure (class)", [
     "https://stackoverflow.com/questions/35550966/swift-add-show-action-to-button-programmatically"
 ])
 */
-class ClosureButton: UIButton {
-    var closure: (() -> Void)?
-    func onTouched(closure: @escaping () -> Void) {
-        self.closure = closure
-        self.addTarget(self, action: #selector(ClosureButton.buttonTouched), for: .touchUpInside)
-    }
-    @objc func buttonTouched() {
-        closure?()
-    }
-}
+//class ClosureButton: UIButton {
+//    var closure: (() -> Void)?
+//    func onTouched(closure: @escaping () -> Void) {
+//        self.closure = closure
+//        self.addTarget(self, action: #selector(ClosureButton.buttonTouched), for: .touchUpInside)
+//    }
+//    @objc func buttonTouched() {
+//        closure?()
+//    }
+//}
 
 class ViewController: UIViewController {
 

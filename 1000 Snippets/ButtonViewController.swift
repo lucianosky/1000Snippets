@@ -110,6 +110,24 @@ class VertButton: UIButton {
     }
 }
 
+/*
+_ = Snippet( 20, "UIButton responding to touch with closure (class)", [
+    "https://stackoverflow.com/questions/37903243/swift-programmatically-create-function-for-button-with-a-closure"
+    "https://stackoverflow.com/questions/25919472/adding-a-closure-as-target-to-a-uibutton",
+    "https://medium.com/@jackywangdeveloper/swift-the-right-way-to-add-target-in-uibutton-in-using-closures-877557ed9455",
+    "https://stackoverflow.com/questions/35550966/swift-add-show-action-to-button-programmatically"
+])
+*/
+class ClosureButton: UIButton {
+    var closure: (() -> Void)?
+    func onTouched(closure: @escaping () -> Void) {
+        self.closure = closure
+        self.addTarget(self, action: #selector(ClosureButton.buttonTouched), for: .touchUpInside)
+    }
+    @objc func buttonTouched() {
+        closure?()
+    }
+}
 
 class ButtonViewController: UIViewController {
 
@@ -133,6 +151,10 @@ class ButtonViewController: UIViewController {
     
     let btn6a = UIButton("Image tint")
     let btn6b = UIButton("", image: UIImage(named: "1-2-3"))
+    let btn6c = UIButton("")
+
+    let btn7a = UIButton("")
+    let btn7b = ClosureButton("0", tag: 0)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -144,7 +166,13 @@ class ButtonViewController: UIViewController {
     func createSubviews() {
         btn1a.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        view.addSubviews([btn1a, btn1b, btn2a, btn2b, btn2c, lbl2, btn2t, btn3a, btn3b, btn4h, btn5v, btn5b, btn6a, btn6b])
+        view.addSubviews([btn1a, btn1b, btn2a,
+                          btn2b, btn2c, lbl2, btn2t,
+                          btn3a, btn3b,
+                          btn4h,
+                          btn5v, btn5b,
+                          btn6a, btn6b, btn6c,
+                          btn7a, btn7b])
     }
     
     func createConstraints() {
@@ -154,17 +182,19 @@ class ButtonViewController: UIViewController {
             "btn3a": btn3a, "btn3b": btn3b,
             "btn4h": btn4h,
             "btn5v": btn5v, "btn5b": btn5b,
-            "btn6a": btn6a, "btn6b": btn6b,
+            "btn6a": btn6a, "btn6b": btn6b, "btn6c": btn6c,
+            "btn7a": btn7a, "btn7b": btn7b
         ]
 
-        activateConstraints("V:|-50-[btn1a(50)]-[btn2a(50)]-[btn3a(50)]-[btn4h(50)]-[btn5v(80)]-[btn6a(50)]", views: dict)
+        activateConstraints("V:|-50-[btn1a(50)]-[btn2a(50)]-[btn3a(50)]-[btn4h(50)]-[btn5v(80)]-[btn6a(50)]-[btn7a(80)]", views: dict)
         
         activateConstraints("H:|-[btn1a(150)]-10-[btn1b]", views: dict)
         activateConstraints("H:|-[btn2a(60)]-[btn2b]-[btn2c]-[btn2t]-[lbl2]", views: dict)
         activateConstraints("H:|-[btn3a(100)]-[btn3b]", views: dict)
         activateConstraints("H:|-[btn4h]-|", views: dict)
         activateConstraints("H:|-[btn5v(100)]-[btn5b]", views: dict)
-        activateConstraints("H:|-[btn6a(100)]-[btn6b]", views: dict)
+        activateConstraints("H:|-[btn6a(100)]-[btn6b]-[btn6c]", views: dict)
+        activateConstraints("H:|-[btn7a(100)]-[btn7b]", views: dict)
 
         btn1b.equalConstraints([.width, .top, .height], to: btn1a)
         
@@ -178,6 +208,9 @@ class ButtonViewController: UIViewController {
         btn5b.equalConstraints([.top], to: btn5v)
 
         btn6b.equalConstraints([.width, .top, .height], to: btn6a)
+        btn6c.equalConstraints([.width, .top, .height], to: btn6a)
+
+        btn7b.equalConstraints([.width, .top, .height], to: btn7a)
     }
     
     func createSnippets() {
@@ -189,6 +222,9 @@ class ButtonViewController: UIViewController {
         snippet12()
         snippet16()
         snippet17()
+        snippet18()
+        snippet19()
+        snippet21()
     }
     
     func snippets1to5() {
@@ -293,6 +329,45 @@ class ButtonViewController: UIViewController {
         btn6a.addTarget(self, action:#selector(self.changeBtnImageTint), for: .touchUpInside)
     }
     
+    func snippet18() {
+        
+        _ = Snippet( 18, "UIButton set attributed title", [
+            "https://stackoverflow.com/questions/29045750/attributed-text-center-alignment"
+            ])
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.alignment = .center
+        let attributes: [NSAttributedStringKey : Any] = [
+            NSAttributedStringKey.font: UIFont.init(name: "Baskerville", size: 18.0)!,
+            NSAttributedStringKey.foregroundColor: UIColor.purple,
+            NSAttributedStringKey.paragraphStyle: paragraph
+        ]
+        let title = NSAttributedString(string: "Attributed", attributes: attributes)
+        btn6c.setAttributedTitle(title, for: .normal)
+
+    }
+    
+    func snippet19() {
+
+        _ = Snippet( 19, "UIButton multi line title", [
+            "https://stackoverflow.com/questions/30679370/swift-uibutton-with-two-lines-of-text"
+            ])
+        btn7a.setTitle("Multi\nLine", for: .normal)
+        btn7a.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
+
+    }
+    
+    func snippet21() {
+        
+        _ = Snippet( 21, "UIButton responding to touch with closure (closure)", [
+            ])
+        btn7b.onTouched { [weak self] in
+            guard let self = self else { return }
+            self.btn7b.tag = self.btn7b.tag + 1
+            self.btn7b.setTitle(String(self.btn7b.tag), for: .normal)
+        }
+
+    }
+    
     @objc func btn3xPressed(sender: UIButton!) {
         if currentButton != sender {
             currentButton.isSelected = false
@@ -328,29 +403,10 @@ class ButtonViewController: UIViewController {
         btn6b.tintColor = .blue
         
     }
-        
+    
 }
 
 /*
-
-/*
- _ = Snippet( 20, "UIButton responding to touch with closure (class)", [
- "https://stackoverflow.com/questions/37903243/swift-programmatically-create-function-for-button-with-a-closure"
- "https://stackoverflow.com/questions/25919472/adding-a-closure-as-target-to-a-uibutton",
- "https://medium.com/@jackywangdeveloper/swift-the-right-way-to-add-target-in-uibutton-in-using-closures-877557ed9455",
- "https://stackoverflow.com/questions/35550966/swift-add-show-action-to-button-programmatically"
- ])
- */
-class ClosureButton: UIButton {
-    var closure: (() -> Void)?
-    func onTouched(closure: @escaping () -> Void) {
-        self.closure = closure
-        self.addTarget(self, action: #selector(ClosureButton.buttonTouched), for: .touchUpInside)
-    }
-    @objc func buttonTouched() {
-        closure?()
-    }
-}
 
 class ViewController: UIViewController {
  
@@ -408,33 +464,6 @@ class ViewController: UIViewController {
     
     func createSnippets() {
  
-        _ = Snippet( 18, "UIButton set attributed title", [
-            "https://stackoverflow.com/questions/29045750/attributed-text-center-alignment"
-            ])
-        let paragraph = NSMutableParagraphStyle()
-        paragraph.alignment = .center
-        let attributes: [NSAttributedStringKey : Any] = [
-            NSAttributedStringKey.font: UIFont.init(name: "Baskerville", size: 18.0)!,
-            NSAttributedStringKey.foregroundColor: UIColor.purple,
-            NSAttributedStringKey.paragraphStyle: paragraph
-        ]
-        let title = NSAttributedString(string: "foobar", attributes: attributes)
-        horizButton.setAttributedTitle(title, for: .normal)
-        
-        _ = Snippet( 19, "UIButton multi line title", [
-            "https://stackoverflow.com/questions/30679370/swift-uibutton-with-two-lines-of-text"
-            ])
-        twoLinesButton.setTitle("foo\nbar", for: .normal)
-        twoLinesButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
-        
-        _ = Snippet( 21, "UIButton responding to touch with closure (closure)", [
-            ])
-        closureButton.onTouched { [weak self] in
-            guard let self = self else { return }
-            self.closureButton.tag = self.closureButton.tag + 1
-            self.closureButton.setTitle(String(self.closureButton.tag), for: .normal)
-        }
-        
         // for snippet 22
         btn22.addTarget(self, action:#selector(self.btn22Touched), for: .touchUpInside)
         btn22a.addTarget(self, action:#selector(self.btn22aTouched), for: .touchUpInside)
