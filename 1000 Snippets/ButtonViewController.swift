@@ -129,6 +129,14 @@ class ClosureButton: UIButton {
     }
 }
 
+// helper method
+extension UIButton {
+    func tagPlusOneToTitle() {
+        tag = tag + 1
+        setTitle("\(tag)", for: .normal)
+    }
+}
+
 class ButtonViewController: UIViewController {
 
     let btn1a = UIButton()
@@ -155,6 +163,8 @@ class ButtonViewController: UIViewController {
 
     let btn7a = UIButton("")
     let btn7b = ClosureButton("0", tag: 0)
+    let btn7c = UIButton("->")
+    let btn7d = UIButton("0", tag: 0)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -172,7 +182,7 @@ class ButtonViewController: UIViewController {
                           btn4h,
                           btn5v, btn5b,
                           btn6a, btn6b, btn6c,
-                          btn7a, btn7b])
+                          btn7a, btn7b, btn7c, btn7d])
     }
     
     func createConstraints() {
@@ -183,7 +193,7 @@ class ButtonViewController: UIViewController {
             "btn4h": btn4h,
             "btn5v": btn5v, "btn5b": btn5b,
             "btn6a": btn6a, "btn6b": btn6b, "btn6c": btn6c,
-            "btn7a": btn7a, "btn7b": btn7b
+            "btn7a": btn7a, "btn7b": btn7b, "btn7c": btn7c, "btn7d": btn7d
         ]
 
         activateConstraints("V:|-50-[btn1a(50)]-[btn2a(50)]-[btn3a(50)]-[btn4h(50)]-[btn5v(80)]-[btn6a(50)]-[btn7a(80)]", views: dict)
@@ -194,7 +204,7 @@ class ButtonViewController: UIViewController {
         activateConstraints("H:|-[btn4h]-|", views: dict)
         activateConstraints("H:|-[btn5v(100)]-[btn5b]", views: dict)
         activateConstraints("H:|-[btn6a(100)]-[btn6b]-[btn6c]", views: dict)
-        activateConstraints("H:|-[btn7a(100)]-[btn7b]", views: dict)
+        activateConstraints("H:|-[btn7a(80)]-[btn7b(60)]-[btn7c]-[btn7d]", views: dict)
 
         btn1b.equalConstraints([.width, .top, .height], to: btn1a)
         
@@ -210,7 +220,9 @@ class ButtonViewController: UIViewController {
         btn6b.equalConstraints([.width, .top, .height], to: btn6a)
         btn6c.equalConstraints([.width, .top, .height], to: btn6a)
 
-        btn7b.equalConstraints([.width, .top, .height], to: btn7a)
+        btn7b.equalConstraints([.top, .height], to: btn7a)
+        btn7c.equalConstraints([.width, .top, .height], to: btn7b)
+        btn7d.equalConstraints([.width, .top, .height], to: btn7b)
     }
     
     func createSnippets() {
@@ -225,6 +237,7 @@ class ButtonViewController: UIViewController {
         snippet18()
         snippet19()
         snippet21()
+        snippet22()
     }
     
     func snippets1to5() {
@@ -295,6 +308,31 @@ class ButtonViewController: UIViewController {
         btn2t.addTarget(self, action:#selector(self.btnWithTag2), for: .touchUpInside)
     }
     
+    @objc func btnWithTag2(sender: UIButton!) {
+        
+        _ = Snippet( 9, "UIView viewWithTag get view by tag", [
+            "https://stackoverflow.com/questions/28473893/referencing-a-uibutton-by-tag-value"
+            ])
+        if let button = self.view.viewWithTag(2) as? UIButton {
+            btn3xPressed(sender: button)
+        }
+        
+    }
+    
+    @objc func btn3xPressed(sender: UIButton!) {
+        if currentButton != sender {
+            currentButton.isSelected = false
+            sender.isSelected = true
+            currentButton = sender
+        }
+        
+        _ = Snippet( 10, "UIView use view (sender) tag", [
+            "https://stackoverflow.com/questions/30046540/get-button-pressed-id-on-swift-via-sender"
+            ])
+        lbl2.text = "Tag: \(sender.tag)"
+        
+    }
+    
     func snippet11() {
         
         _ = Snippet( 11, "UIButton set image for state", [
@@ -329,6 +367,17 @@ class ButtonViewController: UIViewController {
         btn6a.addTarget(self, action:#selector(self.changeBtnImageTint), for: .touchUpInside)
     }
     
+    @objc func changeBtnImageTint(sender: UIButton!) {
+        
+        _ = Snippet( 17, "UIButton image with tint color", [
+            "https://stackoverflow.com/questions/19829356/color-tint-uibutton-image",
+            "https://stackoverflow.com/questions/27163171/change-color-of-png-in-buttons-ios"
+            ])
+        btn6b.setImage(UIImage(named: "1-2-3")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate), for: .normal)
+        btn6b.tintColor = .blue
+        
+    }
+
     func snippet18() {
         
         _ = Snippet( 18, "UIButton set attributed title", [
@@ -361,47 +410,30 @@ class ButtonViewController: UIViewController {
         _ = Snippet( 21, "UIButton responding to touch with closure (closure)", [
             ])
         btn7b.onTouched { [weak self] in
-            guard let self = self else { return }
-            self.btn7b.tag = self.btn7b.tag + 1
-            self.btn7b.setTitle(String(self.btn7b.tag), for: .normal)
+            self?.btn7b.tagPlusOneToTitle()
         }
 
     }
     
-    @objc func btn3xPressed(sender: UIButton!) {
-        if currentButton != sender {
-            currentButton.isSelected = false
-            sender.isSelected = true
-            currentButton = sender
-        }
+    func snippet22() {
         
-        _ = Snippet( 10, "UIView use view (sender) tag", [
-            "https://stackoverflow.com/questions/30046540/get-button-pressed-id-on-swift-via-sender"
-            ])
-        lbl2.text = "Tag: \(sender.tag)"
-        
+        btn7c.addTarget(self, action:#selector(self.btn7cTouched), for: .touchUpInside)
+        btn7d.addTarget(self, action:#selector(self.btn7dTouched), for: .touchUpInside)
+
     }
     
-    @objc func btnWithTag2(sender: UIButton!) {
+    @objc func btn7cTouched(sender: UIButton!) {
         
-        _ = Snippet( 9, "UIView viewWithTag get view by tag", [
-            "https://stackoverflow.com/questions/28473893/referencing-a-uibutton-by-tag-value"
+        _ = Snippet( 22, "UIButton touched event called programatically", [
+            "https://stackoverflow.com/questions/36465953/programmatically-tap-uibutton-swift",
+            "https://stackoverflow.com/questions/39336562/how-to-click-a-button-programmatically"
             ])
-        if let button = self.view.viewWithTag(2) as? UIButton {
-            btn3xPressed(sender: button)
-        }
+        btn7d.sendActions(for: .touchUpInside)
         
     }
 
-    @objc func changeBtnImageTint(sender: UIButton!) {
-        
-        _ = Snippet( 17, "UIButton image with tint color", [
-            "https://stackoverflow.com/questions/19829356/color-tint-uibutton-image",
-            "https://stackoverflow.com/questions/27163171/change-color-of-png-in-buttons-ios"
-            ])
-        btn6b.setImage(UIImage(named: "1-2-3")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate), for: .normal)
-        btn6b.tintColor = .blue
-        
+    @objc func btn7dTouched(sender: UIButton!) {
+        btn7d.tagPlusOneToTitle()
     }
     
 }
@@ -410,11 +442,6 @@ class ButtonViewController: UIViewController {
 
 class ViewController: UIViewController {
  
-    let twoLinesButton = UIButton("Foobar")
- 
-    let vertButton = VertButton()
-    let closureButton = ClosureButton("10", tag: 10)
-    
     let btn22 = UIButton("btn22")
     let btn22a = UIButton("tap")
     
@@ -462,28 +489,7 @@ class ViewController: UIViewController {
         btn22a.equalConstraints([.top], to: btn22)
     }
     
-    func createSnippets() {
  
-        // for snippet 22
-        btn22.addTarget(self, action:#selector(self.btn22Touched), for: .touchUpInside)
-        btn22a.addTarget(self, action:#selector(self.btn22aTouched), for: .touchUpInside)
-        
-    }
- 
-    @objc func btn22Touched(sender: UIButton!) {
-        btn22.setTitle("ok", for: .normal)
-    }
-    
-    @objc func btn22aTouched(sender: UIButton!) {
-        
-        _ = Snippet( 22, "UIButton touched event called programatically", [
-            "https://stackoverflow.com/questions/36465953/programmatically-tap-uibutton-swift",
-            "https://stackoverflow.com/questions/39336562/how-to-click-a-button-programmatically"
-            ])
-        btn22.sendActions(for: .touchUpInside)
-        
-    }
-    
 }
 
 */
