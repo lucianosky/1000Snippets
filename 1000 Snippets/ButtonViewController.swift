@@ -35,38 +35,10 @@ extension UILabel {
     }
 }
 
-// TODO color name - name, extension
-/*
-_ = Snippet( 15, "UIButton convenience init", [
-])
-*/
-extension UIButton {
-    convenience init(_ title: String = "", tag: Int = 0, image: UIImage? = nil) {
-        self.init(type: .custom)
-        setTitle(title, for: .normal)
-        setTitleColor(.blue, for: .normal)
-        setTitleColor(.red, for: .highlighted)
-        setTitleColor(.purple, for: .selected)
-        setTitleColor(.gray, for: .disabled)
-        backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
-        translatesAutoresizingMaskIntoConstraints = false
-        layer.cornerRadius = 10
-        clipsToBounds = true
-        self.tag = tag
-        if let image = image {
-            setImage(image, for: .normal)
-        }
-    }
-}
-
 // TODO: review snippets 13 and 14's Classes
 
 /*
-_ = Snippet( 13, "UIButton image and text aligned horizontally full line extension", [
-    "https://stackoverflow.com/questions/33033737/add-rightview-in-uibutton",
-    "https://medium.com/@harmittaa/uibutton-with-label-text-and-right-aligned-image-a9d0f590bba1",
-    "https://stackoverflow.com/questions/17800288/autolayout-intrinsic-size-of-uibutton-does-not-include-title-insets"
-])
+_ = Snippet( 13, "UIButton image and text aligned horizontally full line extension")
 */
 class HorizButton: UIButton {
     override func layoutSubviews() {
@@ -79,10 +51,7 @@ class HorizButton: UIButton {
 }
 
 /*
-_ = Snippet( 14, "UIButton image and text aligned vertically extension", [
-    "https://stackoverflow.com/questions/4201959/label-under-image-in-uibutton",
-    "https://stackoverflow.com/questions/34682737/button-with-image-and-text-vertically-aligned-using-autolayout-constraints"
-    ])
+_ = Snippet( 14, "UIButton image and text aligned vertically extension")
 */
 class VertButton: UIButton {
     var padding: CGFloat = 5.0 {
@@ -110,13 +79,32 @@ class VertButton: UIButton {
     }
 }
 
+// TODO color name - name, extension
 /*
-_ = Snippet( 20, "UIButton responding to touch with closure (class)", [
-    "https://stackoverflow.com/questions/37903243/swift-programmatically-create-function-for-button-with-a-closure"
-    "https://stackoverflow.com/questions/25919472/adding-a-closure-as-target-to-a-uibutton",
-    "https://medium.com/@jackywangdeveloper/swift-the-right-way-to-add-target-in-uibutton-in-using-closures-877557ed9455",
-    "https://stackoverflow.com/questions/35550966/swift-add-show-action-to-button-programmatically"
-])
+ _ = Snippet( 15, "UIButton convenience init")
+ */
+extension UIButton {
+    convenience init(_ title: String = "", tag: Int = 0, image: UIImage? = nil) {
+        self.init(type: .custom)
+        setTitle(title, for: .normal)
+        setTitleColor(.blue, for: .normal)
+        setTitleColor(.red, for: .highlighted)
+        setTitleColor(.purple, for: .selected)
+        setTitleColor(.gray, for: .disabled)
+        backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
+        translatesAutoresizingMaskIntoConstraints = false
+        layer.cornerRadius = 10
+        clipsToBounds = true
+        self.tag = tag
+        if let image = image {
+            setImage(image, for: .normal)
+        }
+    }
+}
+
+
+/*
+_ = Snippet( 20, "UIButton responding to touch with closure (class)")
 */
 class ClosureButton: UIButton {
     var closure: (() -> Void)?
@@ -242,34 +230,23 @@ class ButtonViewController: UIViewController {
     
     func snippets1to5() {
         
-        _ = Snippet( 1, "UIButton change text", [
-            "https://stackoverflow.com/questions/1033763/is-it-possible-to-update-uibutton-title-text-programmatically"
-            ])
+        _ = Snippet( 1, "UIButton change text")
         btn1a.setTitle("1st Snippet", for: .normal)
         btn1a.setTitle("Highlighted", for: .highlighted)
         
-        _ = Snippet( 2, "UIButton change font name", [
-            "https://stackoverflow.com/questions/25002017/how-to-change-font-of-uibutton-with-swift"
-            ])
+        _ = Snippet( 2, "UIButton change font name")
         btn1a.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17.0)
         
-        _ = Snippet( 3, "UIButton change font color", [
-            "https://stackoverflow.com/questions/2474289/how-can-i-change-uibutton-title-color"
-            ])
+        _ = Snippet( 3, "UIButton change font color")
         btn1a.setTitleColor(.blue, for: .normal)
         btn1a.setTitleColor(.red, for: .highlighted)
 
         // TODO: snippets for color - replace UIColor.init
 
-        _ = Snippet( 4, "UIButton change background color", [
-            "https://stackoverflow.com/questions/26600980/how-do-i-set-uibutton-background-color-forstate-uicontrolstate-highlighted-in-s"
-        ])
+        _ = Snippet( 4, "UIButton change background color")
         btn1a.backgroundColor = UIColor.init(white: 0.9, alpha: 1.0)
         
-        _ = Snippet( 5, "UIButton rounded corners", [
-            "https://stackoverflow.com/questions/38874517/how-to-make-a-simple-rounded-button-in-storyboard",
-            "https://stackoverflow.com/questions/17401032/set-cornerradius-and-setbackgroundimage-to-uibutton"
-        ])
+        _ = Snippet( 5, "UIButton rounded corners")
         btn1a.layer.cornerRadius = 10
         btn1a.clipsToBounds = true
         
@@ -277,26 +254,19 @@ class ButtonViewController: UIViewController {
 
     func snippet6() {
         
-        _ = Snippet( 6, "UIButton set state enabled", [
-            "https://stackoverflow.com/questions/405134/manually-setting-a-uibutton-state"
-            ])
+        _ = Snippet( 6, "UIButton set state enabled")
         btn1b.isEnabled = false
         
     }
     
     func snippets7to8() {
         
-        _ = Snippet( 7, "UIButton set state selected", [
-            "https://stackoverflow.com/questions/25944791/how-to-change-the-state-of-an-uibutton-in-ios-using-swift"
-            ])
+        _ = Snippet( 7, "UIButton set state selected")
         btn2a.isSelected = true
         
         currentButton = btn2a
         
-        _ = Snippet( 8, "UIButton add target action for touchUpInside", [
-            "https://stackoverflow.com/questions/24102191/make-a-uibutton-programmatically-in-swift",
-            "http://rshankar.com/different-ways-to-connect-ibaction-to-uibutton/"
-            ])
+        _ = Snippet( 8, "UIButton add target action for touchUpInside")
         btn2a.addTarget(self, action:#selector(self.btn3xPressed), for: .touchUpInside)
         
         btn2b.addTarget(self, action:#selector(self.btn3xPressed), for: .touchUpInside)
@@ -310,9 +280,7 @@ class ButtonViewController: UIViewController {
     
     @objc func btnWithTag2(sender: UIButton!) {
         
-        _ = Snippet( 9, "UIView viewWithTag get view by tag", [
-            "https://stackoverflow.com/questions/28473893/referencing-a-uibutton-by-tag-value"
-            ])
+        _ = Snippet( 9, "UIView viewWithTag get view by tag")
         if let button = self.view.viewWithTag(2) as? UIButton {
             btn3xPressed(sender: button)
         }
@@ -326,18 +294,14 @@ class ButtonViewController: UIViewController {
             currentButton = sender
         }
         
-        _ = Snippet( 10, "UIView use view (sender) tag", [
-            "https://stackoverflow.com/questions/30046540/get-button-pressed-id-on-swift-via-sender"
-            ])
+        _ = Snippet( 10, "UIView use view (sender) tag")
         lbl2.text = "Tag: \(sender.tag)"
         
     }
     
     func snippet11() {
         
-        _ = Snippet( 11, "UIButton set image for state", [
-            "https://stackoverflow.com/questions/26837371/how-to-change-uibutton-image-in-swift"
-            ])
+        _ = Snippet( 11, "UIButton set image for state")
         btn3a.setImage(UIImage(named: "1-2-3"), for: .normal)
         
     }
@@ -346,19 +310,14 @@ class ButtonViewController: UIViewController {
         
         btn3b.setImage(UIImage(named: "1-2-3"), for: .normal)
         
-        _ = Snippet( 12, "UIButton padding right to image and before text", [
-            "https://stackoverflow.com/questions/5363789/giving-a-text-margin-padding-to-the-uibutton-on-the-iphone"
-            ])
+        _ = Snippet( 12, "UIButton padding right to image and before text")
         btn3b.imageEdgeInsets.right = 10
 
     }
     
     func snippet16() {
         
-        _ = Snippet( 16, "UIButton size to fit", [
-            "https://stackoverflow.com/questions/4135032/ios-uibutton-resize-according-to-text-length",
-            "https://stackoverflow.com/questions/39283525/easiest-way-to-adjust-uibutton-size-based-on-text"
-            ])
+        _ = Snippet( 16, "UIButton size to fit")
         btn5b.sizeToFit()
 
     }
@@ -369,10 +328,7 @@ class ButtonViewController: UIViewController {
     
     @objc func changeBtnImageTint(sender: UIButton!) {
         
-        _ = Snippet( 17, "UIButton image with tint color", [
-            "https://stackoverflow.com/questions/19829356/color-tint-uibutton-image",
-            "https://stackoverflow.com/questions/27163171/change-color-of-png-in-buttons-ios"
-            ])
+        _ = Snippet( 17, "UIButton image with tint color")
         btn6b.setImage(UIImage(named: "1-2-3")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate), for: .normal)
         btn6b.tintColor = .blue
         
@@ -380,9 +336,7 @@ class ButtonViewController: UIViewController {
 
     func snippet18() {
         
-        _ = Snippet( 18, "UIButton set attributed title", [
-            "https://stackoverflow.com/questions/29045750/attributed-text-center-alignment"
-            ])
+        _ = Snippet( 18, "UIButton set attributed title")
         let paragraph = NSMutableParagraphStyle()
         paragraph.alignment = .center
         let attributes: [NSAttributedStringKey : Any] = [
@@ -397,9 +351,7 @@ class ButtonViewController: UIViewController {
     
     func snippet19() {
 
-        _ = Snippet( 19, "UIButton multi line title", [
-            "https://stackoverflow.com/questions/30679370/swift-uibutton-with-two-lines-of-text"
-            ])
+        _ = Snippet( 19, "UIButton multi line title")
         btn7a.setTitle("Multi\nLine", for: .normal)
         btn7a.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
 
@@ -407,8 +359,7 @@ class ButtonViewController: UIViewController {
     
     func snippet21() {
         
-        _ = Snippet( 21, "UIButton responding to touch with closure (closure)", [
-            ])
+        _ = Snippet( 21, "UIButton responding to touch with closure (closure)")
         btn7b.onTouched { [weak self] in
             self?.btn7b.tagPlusOneToTitle()
         }
@@ -424,10 +375,7 @@ class ButtonViewController: UIViewController {
     
     @objc func btn7cTouched(sender: UIButton!) {
         
-        _ = Snippet( 22, "UIButton touched event called programatically", [
-            "https://stackoverflow.com/questions/36465953/programmatically-tap-uibutton-swift",
-            "https://stackoverflow.com/questions/39336562/how-to-click-a-button-programmatically"
-            ])
+        _ = Snippet( 22, "UIButton touched event called programatically")
         btn7d.sendActions(for: .touchUpInside)
         
     }

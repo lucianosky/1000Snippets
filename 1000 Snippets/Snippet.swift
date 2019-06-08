@@ -11,13 +11,11 @@ import Foundation
 struct Snippet {
     let id: Int
     let title: String
-    let links: [String]
     let code: [String]
     
-    init(_ id: Int, _ title: String, _ links: [String], _ code: [String] = []) {
+    init(_ id: Int, _ title: String, _ code: [String] = []) {
         self.id = id
         self.title = title
-        self.links = links
         self.code = code
     }
 }
